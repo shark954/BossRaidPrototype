@@ -1,0 +1,15 @@
+BossRaidPrototype/.vs
+BossRaidPrototype/*.csproj
+BossRaidPrototype/Library
+BossRaidPrototype/Temp/
+BossRaidPrototype/Library/
+BossRaidPrototype/obj/
+BossRaidPrototype/*.unitypackage
+BossRaidPrototype/*.sln
+BossRaidPrototype/UnityPackageManager
+BossRaidPrototype/*.collabignore
+BossRaidPrototype/AssetBundles/
+BossRaidPrototype/EXE/
+BossRaidPrototype/.vsconfig
+BossRaidPrototype/UserSettings
+BossRaidPrototype/Logs
