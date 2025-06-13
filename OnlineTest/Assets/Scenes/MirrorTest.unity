@@ -2680,6 +2680,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1935932193}
   m_CullTransparentMesh: 1
+--- !u!1001 &1159409689242062081
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367837025186877789, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      propertyPath: m_Name
+      value: Katana
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2367837025186877789, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1159409689242062083}
+  m_SourcePrefab: {fileID: 100100000, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+--- !u!1 &1159409689242062082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2367837025186877789, guid: 5da69db077504964f9bb61fef413c556, type: 3}
+  m_PrefabInstance: {fileID: 1159409689242062081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1159409689242062083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159409689242062082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8220e946d1d51584d9ecef8cfd6861ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  addpower: 0
+  charge_count: 0
+  maxcharge_count: 0
+  attackEffect: {fileID: 0}
+  attackEffect_deltime: 0
+  chargeEffect: {fileID: 0}
+  chargeEffect_deltime: 0
+  m_blead: {fileID: 0}
+  m_sword: {fileID: 0}
+  m_attackCollider: {fileID: 0}
+  triggerOn: 0
+  m_team: 
+  m_slashSkillController: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2693,3 +2784,4 @@ SceneRoots:
   - {fileID: 1613321590}
   - {fileID: 1551690871}
   - {fileID: 1756389744}
+  - {fileID: 1159409689242062081}
