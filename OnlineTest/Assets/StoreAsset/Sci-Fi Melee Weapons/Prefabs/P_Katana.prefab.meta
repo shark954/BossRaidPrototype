@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a9fd651948510844eb598f2ba7fb9576
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 186901
+  packageName: Sci-Fi Melee Weapons
+  packageVersion: 1.0
+  assetPath: Assets/Sci-Fi Melee Weapons/Prefabs/P_Katana.prefab
+  uploadId: 412625
