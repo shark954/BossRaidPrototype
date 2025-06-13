@@ -2299,7 +2299,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1558055342}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.81333333
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2442,7 +2442,7 @@ GameObject:
   - component: {fileID: 1756389742}
   - component: {fileID: 1756389741}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
