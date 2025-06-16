@@ -7,10 +7,10 @@ using UnityEngine;
 public class Sword : MonoBehaviour, IWeapon
 {
     [Header("武器データ（ScriptableObject）")]
-    public WeaponClassData weaponData; // 武器のデータを保持（ScriptableObject）
+    public SwordClassData m_weaponData; // 武器のデータを保持（ScriptableObject）
 
     [Header("チャージカウント")]
-    public int chargeCount = 0;              // 現在のチャージ段階（内部カウント）
+    public int m_chargeCount = 0;              // 現在のチャージ段階（内部カウント）
    
 
     [Header("スキル：斬撃飛ばし")]
@@ -34,14 +34,14 @@ public class Sword : MonoBehaviour, IWeapon
     }
 
     // ========== IWeaponインターフェース実装 ==========
-    public int m_Damage => weaponData.m_baseDamage;
-    public float m_AddPower => weaponData.m_chargeMultiplier;
-    public int m_ChargeCount { get => chargeCount; set => chargeCount = value; }
-    public int m_MaxChargeCount { get => weaponData.m_maxChargeCount; set => weaponData.m_maxChargeCount = value; }
-    public GameObject m_AttackEffect => weaponData.m_attackEffectPrefab;
-    public float m_AttackEffectDelTime => weaponData.m_AttackEffectDelTime; // エフェクトの持続時間（必要ならWeaponDataに追加）
-    public GameObject m_ChargeEffect => weaponData.m_chargeEffectPrefab;
-    public float m_ChargeEffectDelTime => weaponData.m_ChargeEffectDelTime; // 同上
+    public int m_Damage => m_weaponData.m_baseDamage;
+    public float m_AddPower => m_weaponData.m_chargeMultiplier;
+    public int m_ChargeCount { get => m_chargeCount; set => m_chargeCount = value; }
+    public int m_MaxChargeCount { get => m_weaponData.m_maxChargeCount; set => m_weaponData.m_maxChargeCount = value; }
+    public GameObject m_AttackEffect => m_weaponData.m_attackEffectPrefab;
+    public float m_AttackEffectDelTime => m_weaponData.m_AttackEffectDelTime; // エフェクトの持続時間（必要ならWeaponDataに追加）
+    public GameObject m_ChargeEffect => m_weaponData.m_chargeEffectPrefab;
+    public float m_ChargeEffectDelTime => m_weaponData.m_ChargeEffectDelTime; // 同上
 
     public WeaponType GetWeaponType() => WeaponType.Sword;
 
@@ -71,10 +71,10 @@ public class Sword : MonoBehaviour, IWeapon
     /// </summary>
     public void Charge()
     {
-        if (triggerOn || chargeCount >= weaponData.m_maxChargeCount)
+        if (triggerOn || m_chargeCount >= m_weaponData.m_maxChargeCount)
             return;
 
-        chargeCount++;
+        m_chargeCount++;
 
         if (m_ChargeEffect != null)
         {
