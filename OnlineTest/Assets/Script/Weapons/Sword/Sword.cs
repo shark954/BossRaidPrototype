@@ -30,9 +30,9 @@ public class Sword : MonoBehaviour, IWeapon
 
     [Header("当たり判定")]
     [SerializeField] private BoxCollider m_blead; // 刃の判定
-    [SerializeField] private BoxCollider m_sword; // 柄の判定（未使用）
+    //[SerializeField] private BoxCollider m_sword; // 柄の判定（未使用）
 
-    
+    [Header("スクリプト")]
     public AttackCollider m_attackCollider; // 攻撃判定クラスへの参照
     private Rigidbody m_rb;
 
@@ -48,7 +48,7 @@ public class Sword : MonoBehaviour, IWeapon
     {
         m_rb = GetComponent<Rigidbody>();
        
-        if (m_sword) m_sword.enabled = false;
+        //if (m_sword) m_sword.enabled = false;
     }
 
    
