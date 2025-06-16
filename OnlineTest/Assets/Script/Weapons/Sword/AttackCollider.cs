@@ -72,7 +72,7 @@ public class AttackCollider : MonoBehaviour
         }
 
         // ダメージ計算: 武器の基本ダメージとチャージに応じた追加パワーを含める
-        int DMG = CalculateDamage(m_weapon.Damage, m_weapon.AddPower, m_weapon.ChargeCount);
+        int DMG = CalculateDamage(m_weapon.m_Damage, m_weapon.m_AddPower, m_weapon.m_ChargeCount);
         parameta.Hitdamage(DMG, m_team);
 
         // 最近ヒットしたターゲットのリストに追加し、無敵時間を開始
@@ -80,10 +80,10 @@ public class AttackCollider : MonoBehaviour
         StartCoroutine(RemoveFromRecentlyHitTargets(other));
 
         // エフェクトを生成し、攻撃音を再生
-        if (m_weapon.AttackEffect != null)
+        if (m_weapon.m_AttackEffect != null)
         {
             // 攻撃エフェクトを生成し、一定時間後に破壊する
-            GameObject dummy = Instantiate(m_weapon.AttackEffect, this.transform.position, this.transform.rotation);
+            GameObject dummy = Instantiate(m_weapon.m_AttackEffect, this.transform.position, this.transform.rotation);
 
 
             if (m_audioSource != null)
@@ -95,9 +95,9 @@ public class AttackCollider : MonoBehaviour
                 Debug.LogWarning("AudioSource が設定されていないため、攻撃音を再生できません。");
             }
 
-            Destroy(dummy, m_weapon.AttackEffectDelTime);
+            Destroy(dummy, m_weapon.m_AttackEffectDelTime);
             // 攻撃後、武器のチャージ数をリセット
-            m_weapon.ChargeCount = 0;
+            m_weapon.m_ChargeCount = 0;
         }
         else
         {
@@ -116,7 +116,7 @@ public class AttackCollider : MonoBehaviour
     private int CalculateDamage(float baseDamage, float addPower, int chargeCount)
     {
 
-        float chargePower = m_weapon.AddPower * m_weapon.ChargeCount;
+        float chargePower = m_weapon.m_AddPower * m_weapon.m_ChargeCount;
         float randomFactor = Random.Range((baseDamage * chargePower) / 2, baseDamage * chargePower);
         // 合計ダメージを四捨五入して整数に変換
         return Mathf.RoundToInt(baseDamage + randomFactor);

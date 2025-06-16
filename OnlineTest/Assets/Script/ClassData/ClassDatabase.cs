@@ -3,13 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ClassDatabase", menuName = "Game/Class Database")]
 public class ClassDatabase : ScriptableObject
 {
-    public ClassData[] classes;
+    public ClassData[] m_classes;
 
     public ClassData GetClassByID(int id)
     {
-        foreach (var c in classes)
+        foreach (var c in m_classes)
         {
-            if (c.classID == id)
+            if (c.m_classID == id)
                 return c;
         }
         return null;

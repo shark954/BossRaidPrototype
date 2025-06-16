@@ -2890,19 +2890,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8220e946d1d51584d9ecef8cfd6861ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  addpower: 0
-  charge_count: 0
-  maxcharge_count: 0
-  attackEffect: {fileID: 1276384610587253169, guid: 4a1dc68d5e5bcae4199c381af285909c, type: 3}
-  attackEffect_deltime: 0.5
-  chargeEffect: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98, type: 3}
-  chargeEffect_deltime: 0
+  weaponData: {fileID: 0}
+  chargeCount: 0
+  m_slashSkillController: {fileID: 1159409689242062086}
   m_blead: {fileID: 639502519}
+  m_team: 
   m_attackCollider: {fileID: 639502517}
   triggerOn: 0
-  m_team: 
-  m_slashSkillController: {fileID: 1159409689242062086}
 --- !u!4 &1159409689242062084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 905427898486095414, guid: 5da69db077504964f9bb61fef413c556, type: 3}
@@ -3021,9 +3015,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  hitboxPrefab: {fileID: 8204365143712359632, guid: 8431eeaf1c24bba43969ea22e840aeee, type: 3}
-  visualEffect: {fileID: 6928196818524876746, guid: f75d554623569aa4a9a059c3adbace28, type: 3}
-  firePoint: {fileID: 501087356}
+  m_hitboxPrefab: {fileID: 0}
+  m_visualEffect: {fileID: 0}
+  m_firePoint: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

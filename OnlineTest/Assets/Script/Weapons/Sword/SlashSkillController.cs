@@ -3,24 +3,24 @@ using Mirror;
 
 public class SlashSkillController : NetworkBehaviour
 {
-    public GameObject hitboxPrefab; // 当たり判定オブジェクト（サーバー用）
-    public GameObject visualEffect; // 見た目だけのエフェクト（ローカル用）
+    public GameObject m_hitboxPrefab; // 当たり判定オブジェクト（サーバー用）
+    public GameObject m_visualEffect; // 見た目だけのエフェクト（ローカル用）
 
-    public Transform firePoint; // 発射位置
+    public Transform m_firePoint; // 発射位置
 
     [Command]
     public void CmdFireSlash()
     {
-        GameObject hitbox = Instantiate(hitboxPrefab, firePoint.position, firePoint.rotation);
+        GameObject hitbox = Instantiate(m_hitboxPrefab, m_firePoint.position, m_firePoint.rotation);
         NetworkServer.Spawn(hitbox);
     }
 
     [ClientRpc]
     public void RpcPlayEffect()
     {
-        if (visualEffect)
+        if (m_visualEffect)
         {
-            GameObject effect = Instantiate(visualEffect, firePoint.position, firePoint.rotation);
+            GameObject effect = Instantiate(m_visualEffect, m_firePoint.position, m_firePoint.rotation);
             Destroy(effect, 2f);
         }
     }

@@ -4,17 +4,17 @@ using Mirror;
 public class PlayerClassSetup : NetworkBehaviour
 {
     [SyncVar(hook = nameof(OnClassChanged))]
-    public int classID;
+    public int m_classID;
 
-    public ClassDatabase database;
-    private ClassData classData;
+    public ClassDatabase m_database;
+    private ClassData m_classData;
 
-    public GameObject weaponSlot;
-    public Animator animator;
+    public GameObject m_weaponSlot;
+    public Animator m_animator;
 
-    public float maxHP;
-    public float moveSpeed;
-    public float attackPower;
+    public float m_maxHP;
+    public float m_moveSpeed;
+    public float m_attackPower;
 
     public override void OnStartLocalPlayer()
     {
@@ -25,26 +25,26 @@ public class PlayerClassSetup : NetworkBehaviour
     [Command]
     void CmdSetClass(int id)
     {
-        classID = id; // これでSyncVarが全クライアントに伝わる
+        m_classID = id; // これでSyncVarが全クライアントに伝わる
     }
 
     void OnClassChanged(int oldID, int newID)
     {
-        classData = database.GetClassByID(newID);
-        if (classData == null) return;
+        m_classData = m_database.GetClassByID(newID);
+        if (m_classData == null) return;
 
         // パラメータ反映
-        maxHP = classData.maxHP;
-        moveSpeed = classData.moveSpeed;
-        attackPower = classData.attackPower;
+        m_maxHP = m_classData.m_maxHP;
+        m_moveSpeed = m_classData.m_moveSpeed;
+        m_attackPower = m_classData.m_attackPower;
 
         // 武器装備
-        if (weaponSlot.transform.childCount > 0)
-            Destroy(weaponSlot.transform.GetChild(0).gameObject);
-        Instantiate(classData.weaponPrefab, weaponSlot.transform);
+        if (m_weaponSlot.transform.childCount > 0)
+            Destroy(m_weaponSlot.transform.GetChild(0).gameObject);
+        Instantiate(m_classData.m_weaponPrefab, m_weaponSlot.transform);
 
         // アニメーター適用
-        if (animator != null)
-            animator.runtimeAnimatorController = classData.animator;
+        if (m_animator != null)
+            m_animator.runtimeAnimatorController = m_classData.m_animator;
     }
 }

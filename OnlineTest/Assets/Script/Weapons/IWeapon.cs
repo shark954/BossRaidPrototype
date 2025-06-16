@@ -9,28 +9,28 @@ public interface IWeapon
     // === ステータス関連 ===
 
     /// <summary>基本ダメージ</summary>
-    int Damage { get; }
+    int m_Damage { get; }
 
     /// <summary>チャージなどで加算される追加攻撃力</summary>
-    float AddPower { get; }
+    float m_AddPower { get; }
 
     /// <summary>現在のチャージ段階</summary>
-    int ChargeCount { get; set; }
+    int m_ChargeCount { get; set; }
 
     /// <summary>チャージ段階の最大値</summary>
-    int MaxChargeCount { get; set; }
+    int m_MaxChargeCount { get; set; }
 
     /// <summary>攻撃ヒット時に生成するエフェクト</summary>
-    GameObject AttackEffect { get; }
+    GameObject m_AttackEffect { get; }
 
     /// <summary>攻撃エフェクトの消滅時間</summary>
-    float AttackEffectDelTime { get; }
+    float m_AttackEffectDelTime { get; }
 
     /// <summary>チャージ時に生成するエフェクト</summary>
-    GameObject ChargeEffect { get; }
+    GameObject m_ChargeEffect { get; }
 
     /// <summary>チャージエフェクトの消滅時間</summary>
-    float ChargeEffectDelTime { get; }
+    float m_ChargeEffectDelTime { get; }
 
     // === アクション関連 ===
 
