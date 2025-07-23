@@ -9,7 +9,7 @@ public class CounterSystem : MonoBehaviour
     [Header("受付の名前")]   //ex.オンライン受付
     public TextMeshProUGUI m_counterName;
     [Header("受付名の表示する範囲")]
-    public BoxCollider m_realizeCounterName;
+    public SphereCollider m_realizeCounterName;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +27,11 @@ public class CounterSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        m_counterName.enabled = true;
+        if (other.CompareTag("Player"))
+        {
+            m_counterName.enabled = true;
+
+
+        }
     }
 }
