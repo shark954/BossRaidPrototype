@@ -15,7 +15,6 @@ public class CounterSystem : MonoBehaviour
     void Start()
     {
         m_counterName.enabled = false;
-        m_realizeCounterName.enabled = false;
         m_counter.gameObject.SetActive(false);
     }
 
@@ -30,8 +29,7 @@ public class CounterSystem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             m_counterName.enabled = true;
-
-
+            m_counter.gameObject.SetActive(true);
         }
     }
 }
