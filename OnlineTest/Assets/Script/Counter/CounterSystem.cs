@@ -24,12 +24,21 @@ public class CounterSystem : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             m_counterName.enabled = true;
             m_counter.gameObject.SetActive(true);
+        }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            m_counter.gameObject.SetActive(false);
         }
     }
 }

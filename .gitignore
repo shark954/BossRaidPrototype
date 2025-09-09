@@ -1,15 +1,20 @@
-OnlineTest/.vs
-OnlineTest/*.csproj
-OnlineTest/Library
-OnlineTest/Temp/
+# Unity キャッシュ・ビルド生成物
 OnlineTest/Library/
+OnlineTest/Temp/
 OnlineTest/obj/
-OnlineTest/*.unitypackage
-OnlineTest/*.sln
-OnlineTest/UnityPackageManager
-OnlineTest/*.collabignore
+OnlineTest/Build/
+OnlineTest/Logs/
+OnlineTest/UserSettings/
 OnlineTest/AssetBundles/
 OnlineTest/EXE/
-OnlineTest/.vsconfig
-OnlineTest/UserSettings
-OnlineTest/Logs
+
+# Visual Studio 関連
+OnlineTest/.vs/
+OnlineTest/*.sln
+OnlineTest/*.csproj
+OnlineTest/*.vsconfig
+
+# Unity Package Manager / Collaborate
+OnlineTest/UnityPackageManager/
+OnlineTest/*.collabignore
+OnlineTest/*.unitypackage
