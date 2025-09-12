@@ -1,7 +1,5 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 using Mirror; // Mirror対応用
+using UnityEngine;
 
 public class PlayerMove : NetworkBehaviour
 {
@@ -23,13 +21,22 @@ public class PlayerMove : NetworkBehaviour
     private float evadeTimer = 0f;
     private float evadeHoldThreshold = 0.3f; // これ以上の長押しでダッシュ
 
+    [Header("地面判定用設定")]
+    public float groundCheckDistance = 0.1f;
+    public LayerMask groundLayer;
+
+    [Header("ジャンプ設定")]
+    public int maxJumpCount = 2;  // 最大ジャンプ回数（二段ジャンプなら2）
+    private int currentJumpCount;
+
     // チャージ判定
     private bool isCharging = false;
     float chargeStartTime;
 
-
+    [System.Obsolete]
     void Awake()
     {
+        currentJumpCount = maxJumpCount;
         rb = GetComponent<Rigidbody>();
         controls = new PlayerControl(); // 自動生成されたInputActionsのインスタンス化
 
@@ -40,8 +47,14 @@ public class PlayerMove : NetworkBehaviour
         // ジャンプ（地上のみ）
         controls.GamePlay.Jump.performed += ctx =>
         {
-            if (isGrounded && isLocalPlayer)
+            if (!isLocalPlayer) return;
+
+            if (currentJumpCount > 0)
+            {
+              
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                currentJumpCount--;
+            }
         };
 
         // Evade（回避 or ダッシュ）：押し始め
@@ -98,6 +111,14 @@ public class PlayerMove : NetworkBehaviour
         };
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
     // プレイヤーが自分自身のときだけ入力を有効化
     public override void OnStartAuthority()
     {
@@ -114,12 +135,20 @@ public class PlayerMove : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
 
-        // 移動処理（通常 or ダッシュ）
+        bool wasGrounded = isGrounded;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
+
+        if (!wasGrounded && isGrounded)
+        {
+            // 着地時にジャンプ回数をリセット
+            currentJumpCount = maxJumpCount;
+        }
+
+        // 移動処理
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         float speed = isEvadeHeld && evadeTimer >= evadeHoldThreshold ? dashSpeed : moveSpeed;
         rb.MovePosition(transform.position + move * speed * Time.fixedDeltaTime);
 
-        // ダッシュの押し時間カウント
         if (isEvadeHeld)
             evadeTimer += Time.deltaTime;
     }
