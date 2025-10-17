@@ -33,8 +33,8 @@ public class PlayerMove : NetworkBehaviour
     private bool isCharging = false;
     float chargeStartTime;
 
-    [SerializeField]
-    private GunTest m_gunTest;
+    //[SerializeField]
+    //private GunTest m_gunTest;
    
     [System.Obsolete]
     void Awake()
