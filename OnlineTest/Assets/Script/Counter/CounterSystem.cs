@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using Unity.UI;
+using UnityEngine.UI;
 
 public class CounterSystem : MonoBehaviour
 {

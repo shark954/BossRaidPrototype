@@ -33,6 +33,9 @@ public class PlayerMove : NetworkBehaviour
     private bool isCharging = false;
     float chargeStartTime;
 
+    [SerializeField]
+    private GunTest m_gunTest;
+   
     [System.Obsolete]
     void Awake()
     {
@@ -162,6 +165,11 @@ public class PlayerMove : NetworkBehaviour
     {
         Debug.Log("通常攻撃（サーバーで処理）");
         // 弾生成・攻撃処理などをここに追加
+        if (isLocalPlayer)
+        {
+
+        }
+
     }
 
     [Command]
