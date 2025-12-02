@@ -30,6 +30,7 @@ public class PlayerMove : NetworkBehaviour
     // === プライベート変数群（m_）===
     // ===============================
 
+    [SerializeField]
     private Animator m_animator = null;
     private Rigidbody m_Rigidbody;               // プレイヤーのRigidbody
     private PlayerControl m_Controls;            // InputSystemで生成される操作クラス
@@ -64,13 +65,13 @@ public class PlayerMove : NetworkBehaviour
         m_CurrentJumpCount = maxJumpCount;
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Controls = new PlayerControl();
-        /*if(m_animator == null)
+        if(m_animator == null)
         {
             foreach (Animator animator in GetComponentsInChildren<Animator>())
             {
                 m_animator = animator;
             }
-        }*/
+        }
         SetupInput(); // 入力イベントの登録
     }
 
@@ -110,6 +111,8 @@ public class PlayerMove : NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             m_IsGrounded = true;
+        m_animator.SetBool("Jump",false);
+        m_animator.SetBool("DoubleJump", false);
     }
 
     // ===============================
@@ -193,7 +196,11 @@ public class PlayerMove : NetworkBehaviour
     void TryJump()
     {
         if (m_CurrentJumpCount <= 0) return;
-
+        m_animator.SetBool("Jump",true);
+        if(!m_IsGrounded)
+        {
+            m_animator.SetBool("DoubleJump", true);
+        }
         m_Rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         m_CurrentJumpCount--;
     }
@@ -204,9 +211,15 @@ public class PlayerMove : NetworkBehaviour
     void HandleMovement()
     {
         Vector3 direction = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y);
-        float speed = (m_IsEvadeHeld && m_EvadeTimer >= m_EvadeHoldThreshold) ? dashSpeed : moveSpeed;
+        float moveSpeedValue = (m_IsEvadeHeld && m_EvadeTimer >= m_EvadeHoldThreshold) ? dashSpeed : moveSpeed;
+      
+        // アニメーション用のパラメーター送信
+        float animSpeed = m_MoveInput.magnitude;
+        m_animator.SetFloat("Speed", animSpeed);
+        m_animator.SetFloat("MoveX", m_MoveInput.x); // ← 追加
+        m_animator.SetFloat("MoveY", m_MoveInput.y); // ← 追加
 
-        m_Rigidbody.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
+        m_Rigidbody.MovePosition(transform.position + direction * moveSpeedValue * Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -246,18 +259,21 @@ public class PlayerMove : NetworkBehaviour
     void DoNormalAttack()
     {
         Debug.Log("通常攻撃をサーバーで実行");
+        m_animator.SetTrigger("Attack");
         // 弾生成など
     }
 
     void DoChargeAttack()
     {
         Debug.Log("チャージ攻撃をサーバーで実行");
+
         // チャージ弾処理
     }
 
     void DoSpecialAttack()
     {
         Debug.Log("特殊攻撃をサーバーで実行");
+        m_animator.SetTrigger("Skill");
         // スキル処理
     }
 

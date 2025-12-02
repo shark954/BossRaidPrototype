@@ -693,10 +693,10 @@ GameObject:
   - component: {fileID: 1077481444965485892}
   - component: {fileID: 7341887327147668599}
   - component: {fileID: 1309334748389497384}
+  - component: {fileID: 7512330909351899065}
   - component: {fileID: 4626142592238026704}
   - component: {fileID: 1028564828352637857}
   - component: {fileID: 2692978741064707256}
-  - component: {fileID: 7512330909351899065}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -804,6 +804,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!136 &7512330909351899065
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810315097345267551}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.89
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &4626142592238026704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,8 +843,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  moveSpeed: 5
-  dashSpeed: 10
+  moveSpeed: 1
+  dashSpeed: 5
   jumpForce: 5
   chargeTimeThreshold: 1
   maxJumpCount: 2
@@ -829,6 +852,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  m_animator: {fileID: 0}
 --- !u!114 &1028564828352637857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,29 +895,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   cameraFollowTarget: {fileID: 1209686192012251246}
---- !u!136 &7512330909351899065
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810315097345267551}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.89
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &8548607331742714755
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +943,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4450055180794833926, guid: 4c1431046e8e52649b64cf85482aa625, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9f1fcbdd5adc1cb48873d879ccb7ee7d, type: 2}
     - target: {fileID: 6947429026955013318, guid: 4c1431046e8e52649b64cf85482aa625, type: 3}
       propertyPath: m_Name
       value: SKM_Robot3_Full
