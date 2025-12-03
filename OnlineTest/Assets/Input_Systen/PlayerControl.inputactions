@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "PlayerControl",
     "maps": [
         {
@@ -58,6 +59,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "02ce85a7-0236-4935-a040-9b092584659d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -69,28 +79,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "376cf33c-7eed-4ebc-9087-c2a0c7eeba31",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b51dc7ec-ceed-4fc9-9389-13186d406907",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -195,17 +183,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2440486e-15b3-41e4-a9e5-860ce1020ee4",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "25cb2dad-9739-428b-8ac8-9f155be6d5b6",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -228,41 +205,8 @@
                 },
                 {
                     "name": "",
-                    "id": "394d8197-50c1-4ac5-b3b1-fe6d78dba7b7",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Evade",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "634a10db-b75a-4024-9bdb-7650a9066cb9",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Evade",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "30e492b7-279f-4c2e-ab61-957ca970c61d",
                     "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpecialAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "be8ada02-13d2-41f0-b5e9-fbfe134288dc",
-                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -283,12 +227,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9b4e759f-6af8-4c8e-bf14-3b67d7fe90b1",
-                    "path": "<Gamepad>/rightStick",
+                    "id": "a293a572-3769-4d6c-9587-7f47eeb231b9",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

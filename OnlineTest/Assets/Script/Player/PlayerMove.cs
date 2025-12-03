@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Mirrorを使ったネットワーク対応のプレイヤー操作スクリプト
@@ -25,13 +26,14 @@ public class PlayerMove : NetworkBehaviour
     [Header("地面判定")]
     public float groundCheckDistance = 0.1f; // 地面との距離チェック長さ
     public LayerMask groundLayer;            // 地面判定に使うレイヤー
-
+    
+  
+    public AttackAnimationSystem m_animationSystem;
     // ===============================
     // === プライベート変数群（m_）===
     // ===============================
 
-    [SerializeField]
-    private Animator m_animator = null;
+   
     private Rigidbody m_Rigidbody;               // プレイヤーのRigidbody
     private PlayerControl m_Controls;            // InputSystemで生成される操作クラス
     private Vector2 m_MoveInput;                 // 入力方向（X,Z）
@@ -39,12 +41,10 @@ public class PlayerMove : NetworkBehaviour
     private int m_CurrentJumpCount;              // 残ジャンプ回数
     private bool m_IsGrounded = true;            // 地面に接触しているか
 
-    private bool m_IsEvadeHeld = false;          // 回避ボタンが押されているか
-    private float m_EvadeTimer = 0f;             // 回避ボタンの押下時間
-    private float m_EvadeHoldThreshold = 0.3f;   // 押下時間がこれ以上でダッシュ、未満でステップ
-
+    
     private bool m_IsCharging = false;           // チャージ攻撃中かどうか
     private float m_ChargeStartTime;             // チャージ開始時刻
+    private bool m_IsAttack = false;
 
     // ===============================
     // === Unity ライフサイクル ===
@@ -65,13 +65,7 @@ public class PlayerMove : NetworkBehaviour
         m_CurrentJumpCount = maxJumpCount;
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Controls = new PlayerControl();
-        if(m_animator == null)
-        {
-            foreach (Animator animator in GetComponentsInChildren<Animator>())
-            {
-                m_animator = animator;
-            }
-        }
+      
         SetupInput(); // 入力イベントの登録
     }
 
@@ -101,7 +95,7 @@ public class PlayerMove : NetworkBehaviour
 
         HandleGroundCheck();
         HandleMovement();
-        UpdateEvadeTimer();
+        
     }
 
     /// <summary>
@@ -111,8 +105,8 @@ public class PlayerMove : NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             m_IsGrounded = true;
-        m_animator.SetBool("Jump",false);
-        m_animator.SetBool("DoubleJump", false);
+        m_animationSystem.m_Animator.SetBool("JumpPush", false);
+        m_animationSystem.m_Animator.SetBool("DoubleJumpPush", false);
     }
 
     // ===============================
@@ -135,24 +129,23 @@ public class PlayerMove : NetworkBehaviour
                 TryJump();
         };
 
-        // 回避（長押し→ダッシュ、短押し→ステップ）
-        m_Controls.GamePlay.Evade.started += _ =>
+        // ステップ（Evade は performed のみでOK）
+        m_Controls.GamePlay.Evade.performed += _ =>
         {
             if (!isLocalPlayer) return;
-            m_IsEvadeHeld = true;
-            m_EvadeTimer = 0f;
+            Step();
         };
 
-        m_Controls.GamePlay.Evade.canceled += _ =>
+        m_Controls.GamePlay.Sprint.started += _ =>
         {
             if (!isLocalPlayer) return;
+            Dash();
+        };
 
-            if (m_EvadeTimer >= m_EvadeHoldThreshold)
-                Dash();
-            else
-                Step();
-
-            m_IsEvadeHeld = false;
+        m_Controls.GamePlay.Sprint.canceled += _ =>
+        {
+            if (!isLocalPlayer) return;
+            m_animationSystem.m_Animator.SetBool("Sprint", false);
         };
 
         // 通常/チャージ攻撃
@@ -196,10 +189,10 @@ public class PlayerMove : NetworkBehaviour
     void TryJump()
     {
         if (m_CurrentJumpCount <= 0) return;
-        m_animator.SetBool("Jump",true);
+        m_animationSystem.m_Animator.SetBool("JumpPush",true);
         if(!m_IsGrounded)
         {
-            m_animator.SetBool("DoubleJump", true);
+            m_animationSystem.m_Animator.SetBool("DoubleJumpPush", true);
         }
         m_Rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         m_CurrentJumpCount--;
@@ -211,14 +204,16 @@ public class PlayerMove : NetworkBehaviour
     void HandleMovement()
     {
         Vector3 direction = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y);
-        float moveSpeedValue = (m_IsEvadeHeld && m_EvadeTimer >= m_EvadeHoldThreshold) ? dashSpeed : moveSpeed;
-      
+        float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
+
+
         // アニメーション用のパラメーター送信
         float animSpeed = m_MoveInput.magnitude;
-        m_animator.SetFloat("Speed", animSpeed);
-        m_animator.SetFloat("MoveX", m_MoveInput.x); // ← 追加
-        m_animator.SetFloat("MoveY", m_MoveInput.y); // ← 追加
+        m_animationSystem.m_Animator.SetFloat("Speed", animSpeed);
+        m_animationSystem.m_Animator.SetFloat("MoveX", m_MoveInput.x); // ← 追加
+        m_animationSystem.m_Animator.SetFloat("MoveY", m_MoveInput.y); // ← 追加
 
+       
         m_Rigidbody.MovePosition(transform.position + direction * moveSpeedValue * Time.fixedDeltaTime);
     }
 
@@ -234,15 +229,7 @@ public class PlayerMove : NetworkBehaviour
             m_CurrentJumpCount = maxJumpCount;
     }
 
-    /// <summary>
-    /// 回避ボタンの押下時間を更新
-    /// </summary>
-    void UpdateEvadeTimer()
-    {
-        if (m_IsEvadeHeld)
-            m_EvadeTimer += Time.deltaTime;
-    }
-
+  
     // ===============================
     // === サーバー側の攻撃処理 ===
     // ===============================
@@ -259,7 +246,9 @@ public class PlayerMove : NetworkBehaviour
     void DoNormalAttack()
     {
         Debug.Log("通常攻撃をサーバーで実行");
-        m_animator.SetTrigger("Attack");
+        m_animationSystem.m_Animator.SetBool("AttackFlag",true);
+        m_animationSystem.AttackTrigger();
+
         // 弾生成など
     }
 
@@ -273,7 +262,7 @@ public class PlayerMove : NetworkBehaviour
     void DoSpecialAttack()
     {
         Debug.Log("特殊攻撃をサーバーで実行");
-        m_animator.SetTrigger("Skill");
+        m_animationSystem.m_Animator.SetTrigger("Skill");
         // スキル処理
     }
 
@@ -282,7 +271,11 @@ public class PlayerMove : NetworkBehaviour
     // ===============================
 
     void Step() => Debug.Log("ローカル：ステップ");
-    void Dash() => Debug.Log("ローカル：ダッシュ");
+    void Dash()
+    {
+        Debug.Log("ローカル：ダッシュ");
+        m_animationSystem.m_Animator.SetBool("Sprint", true);
+    }  
     void StartChargeEffect() => Debug.Log("ローカル：チャージ開始");
     void EndChargeEffect() => Debug.Log("ローカル：チャージ終了");
 }
