@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1209686192012251246}
   m_Layer: 0
   m_Name: CameraPoint
-  m_TagString: Untagged
+  m_TagString: CameraPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -696,7 +696,6 @@ GameObject:
   - component: {fileID: 7512330909351899065}
   - component: {fileID: 4626142592238026704}
   - component: {fileID: 1028564828352637857}
-  - component: {fileID: 2692978741064707256}
   - component: {fileID: 3746314583548000076}
   - component: {fileID: 7057565141258719513}
   m_Layer: 0
@@ -880,25 +879,6 @@ MonoBehaviour:
   m_effectdel: 0
   m_hpBar: {fileID: 3736886326932526490}
   m_gameManager: {fileID: 3010894159099542525, guid: f1819143748a5214d946380d7e036268, type: 3}
---- !u!114 &2692978741064707256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810315097345267551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0790f7f0c0a930f43a09f7584c6c5fd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMethod: 0
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  cineCam: {fileID: 0}
-  cameraFollowTarget: {fileID: 1209686192012251246}
-  rotationSpeed: 100
 --- !u!114 &3746314583548000076
 MonoBehaviour:
   m_ObjectHideFlags: 0
