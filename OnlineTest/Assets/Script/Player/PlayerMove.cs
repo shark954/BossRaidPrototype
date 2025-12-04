@@ -41,7 +41,8 @@ public class PlayerMove : NetworkBehaviour
     private int m_CurrentJumpCount;              // 残ジャンプ回数
     private bool m_IsGrounded = true;            // 地面に接触しているか
 
-    
+    private bool m_IsSprint = false;
+
     private bool m_IsCharging = false;           // チャージ攻撃中かどうか
     private float m_ChargeStartTime;             // チャージ開始時刻
     private bool m_IsAttack = false;
@@ -145,6 +146,7 @@ public class PlayerMove : NetworkBehaviour
         m_Controls.GamePlay.Sprint.canceled += _ =>
         {
             if (!isLocalPlayer) return;
+            m_IsSprint = false;
             m_animationSystem.m_Animator.SetBool("Sprint", false);
         };
 
@@ -205,7 +207,7 @@ public class PlayerMove : NetworkBehaviour
     {
         Vector3 direction = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y);
         float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
-
+        Vector3 movementDirection = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y).normalized;
 
         // アニメーション用のパラメーター送信
         float animSpeed = m_MoveInput.magnitude;
@@ -213,7 +215,12 @@ public class PlayerMove : NetworkBehaviour
         m_animationSystem.m_Animator.SetFloat("MoveX", m_MoveInput.x); // ← 追加
         m_animationSystem.m_Animator.SetFloat("MoveY", m_MoveInput.y); // ← 追加
 
-       
+        if (m_IsSprint && movementDirection != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
+        }
+
         m_Rigidbody.MovePosition(transform.position + direction * moveSpeedValue * Time.fixedDeltaTime);
     }
 
@@ -274,7 +281,9 @@ public class PlayerMove : NetworkBehaviour
     void Dash()
     {
         Debug.Log("ローカル：ダッシュ");
+        m_IsSprint = true;
         m_animationSystem.m_Animator.SetBool("Sprint", true);
+        
     }  
     void StartChargeEffect() => Debug.Log("ローカル：チャージ開始");
     void EndChargeEffect() => Debug.Log("ローカル：チャージ終了");
