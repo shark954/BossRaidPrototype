@@ -37,7 +37,7 @@ public class PlayerCameraFollow : NetworkBehaviour
             GameObject cameraPoint = GameObject.FindGameObjectWithTag("CameraPoint");
             if (cameraPoint != null)
             {
-                //cineCam.Follow = cameraPoint.transform;
+                cineCam.Follow = cameraPoint.transform;
                 cineCam.LookAt = cameraPoint.transform;
                 isCameraSet = true;
                 Debug.Log("CameraPoint ÇÉJÉÅÉâÇ…ê›íËÇµÇ‹ÇµÇΩ");

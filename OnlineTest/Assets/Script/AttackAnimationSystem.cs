@@ -21,24 +21,26 @@ public class AttackAnimationSystem : MonoBehaviour
         //攻撃許可チェック
         if (m_AttackFlag)
         {
-            
             //Animatorに、【攻撃】のInt値に+1
-                m_Animator.SetInteger("Attack", m_Animator.GetInteger("Attack")+1);
-                //攻撃許可を撤回
-                m_AttackFlag = false;
-            //マウス左ボタンを押す
-            if (Input.GetMouseButtonDown(0))
-            {
-                
-            }
+            m_Animator.SetInteger("Attack", m_Animator.GetInteger("Attack") + 1);
+            //攻撃許可を撤回
+            m_AttackFlag = false;
         }
     }
+
+    // イベント用に作った、引数なしの関数
+    public void AnimEvent_EnableAttack() => AttackFlagOnOff(1);
+    public void AnimEvent_DisableAttack() => AttackFlagOnOff(2);
+    public void AnimEvent_ResetAttack() => AttackFlagOnOff(0);
+
     /// <summary>
     /// Animator側からの攻撃許可・不許可フラグ
     /// </summary>
     /// <param name="No"> 0 攻撃不許可　1 攻撃許可</param>
     public void AttackFlagOnOff(int No)
     {
+        Debug.Log($"AttackFlagOnOff({No}) called.");
+        
         switch (No)
         {
             //初期化・ファーストアタック

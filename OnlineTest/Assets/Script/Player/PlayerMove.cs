@@ -205,26 +205,37 @@ public class PlayerMove : NetworkBehaviour
     /// </summary>
     void HandleMovement()
     {
-        // 入力からXZ方向の移動ベクトルを作成
-        Vector3 direction = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y);
 
-        // AnimatorのSprintフラグから現在の移動速度を判定（SprintならdashSpeed、それ以外は通常速度）
+        if (Camera.main == null) return;
+
+        // カメラの前方向と右方向（Y成分を除去）
+        Vector3 camForward = Camera.main.transform.forward;
+        camForward.y = 0f;
+        camForward.Normalize();
+
+        Vector3 camRight = Camera.main.transform.right;
+        camRight.y = 0f;
+        camRight.Normalize();
+
+        // カメラ基準の移動方向ベクトル
+        Vector3 moveDir = camForward * m_MoveInput.y + camRight * m_MoveInput.x;
+
+        // AnimatorのSprintフラグから現在の移動速度を判定
         float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
 
-        // 向き変更に使う正規化された移動方向ベクトルを取得
-        Vector3 movementDirection = direction.normalized;
-
-        // アニメーション用のパラメータを更新（速度・方向）
+        // アニメーション更新
         float animSpeed = m_MoveInput.magnitude;
         m_animationSystem.m_Animator.SetFloat("Speed", animSpeed);
 
-        // 入力方向を向くように回転を補間（なめらかに回す）
-        Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
+        // 回転（移動している方向に向く）
+        if (moveDir != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
+        }
 
-
-        // Rigidbodyを使って物理的にプレイヤーを移動させる
-        m_Rigidbody.MovePosition(transform.position + direction * moveSpeedValue * Time.fixedDeltaTime);
+        // 移動
+        m_Rigidbody.MovePosition(transform.position + moveDir.normalized * moveSpeedValue * Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -256,7 +267,7 @@ public class PlayerMove : NetworkBehaviour
     void DoNormalAttack()
     {
         Debug.Log("通常攻撃をサーバーで実行");
-        m_animationSystem.m_Animator.SetBool("AttackFlag",true);
+        m_animationSystem.m_Animator.SetBool("EnableAttack", true);
         m_animationSystem.AttackTrigger();
 
         // 弾生成など
