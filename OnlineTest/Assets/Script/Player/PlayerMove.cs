@@ -146,7 +146,7 @@ public class PlayerMove : NetworkBehaviour
         m_Controls.GamePlay.Sprint.canceled += _ =>
         {
             if (!isLocalPlayer) return;
-            m_IsSprint = false;
+            
             m_animationSystem.m_Animator.SetBool("Sprint", false);
         };
 
@@ -201,26 +201,29 @@ public class PlayerMove : NetworkBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの移動（回避中は速度が変わる）
+    /// プレイヤーの移動処理（通常移動・ダッシュ時の速度切り替えを含む）
     /// </summary>
     void HandleMovement()
     {
+        // 入力からXZ方向の移動ベクトルを作成
         Vector3 direction = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y);
-        float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
-        Vector3 movementDirection = new Vector3(m_MoveInput.x, 0f, m_MoveInput.y).normalized;
 
-        // アニメーション用のパラメーター送信
+        // AnimatorのSprintフラグから現在の移動速度を判定（SprintならdashSpeed、それ以外は通常速度）
+        float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
+
+        // 向き変更に使う正規化された移動方向ベクトルを取得
+        Vector3 movementDirection = direction.normalized;
+
+        // アニメーション用のパラメータを更新（速度・方向）
         float animSpeed = m_MoveInput.magnitude;
         m_animationSystem.m_Animator.SetFloat("Speed", animSpeed);
-        m_animationSystem.m_Animator.SetFloat("MoveX", m_MoveInput.x); // ← 追加
-        m_animationSystem.m_Animator.SetFloat("MoveY", m_MoveInput.y); // ← 追加
 
-        if (m_IsSprint && movementDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
-        }
+        // 入力方向を向くように回転を補間（なめらかに回す）
+        Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
 
+
+        // Rigidbodyを使って物理的にプレイヤーを移動させる
         m_Rigidbody.MovePosition(transform.position + direction * moveSpeedValue * Time.fixedDeltaTime);
     }
 
@@ -281,7 +284,7 @@ public class PlayerMove : NetworkBehaviour
     void Dash()
     {
         Debug.Log("ローカル：ダッシュ");
-        m_IsSprint = true;
+        
         m_animationSystem.m_Animator.SetBool("Sprint", true);
         
     }  
