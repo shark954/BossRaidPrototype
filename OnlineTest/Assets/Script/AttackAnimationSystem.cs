@@ -6,7 +6,7 @@ public class AttackAnimationSystem : MonoBehaviour
     public Animator m_Animator;
     [Header("攻撃実行許可フラグ")]
     public bool m_AttackFlag = false;
-
+   
     void Update()
     {
         //攻撃時の判定(マウス入力)
@@ -18,25 +18,27 @@ public class AttackAnimationSystem : MonoBehaviour
     /// </summary>
     public void AttackTrigger()
     {
+        Debug.Log(m_Animator.GetInteger("攻撃"));
+        Debug.Log(m_AttackFlag);
         //攻撃許可チェック
         if (m_AttackFlag)
         {
-            //Animatorに、【攻撃】のInt値に+1
-            m_Animator.SetInteger("Attack", m_Animator.GetInteger("Attack") + 1);
-            //攻撃許可を撤回
-            m_AttackFlag = false;
+            //マウス左ボタンを押す
+            if (Input.GetMouseButtonDown(0))
+            {
+                //Animatorに、【攻撃】のInt値に+1
+                m_Animator.SetInteger("攻撃", m_Animator.GetInteger("攻撃") + 1);
+                //攻撃許可を撤回
+                m_AttackFlag = false;
+            }
         }
     }
-
-    // イベント用に作った、引数なしの関数
-    public void AnimEvent_EnableAttack() => AttackFlagOnOff(1);
-    public void AnimEvent_DisableAttack() => AttackFlagOnOff(2);
-    public void AnimEvent_ResetAttack() => AttackFlagOnOff(0);
-
+    
     /// <summary>
     /// Animator側からの攻撃許可・不許可フラグ
     /// </summary>
     /// <param name="No"> 0 攻撃不許可　1 攻撃許可</param>
+    /// 2-1-2　最後のアニメーションは0有
     public void AttackFlagOnOff(int No)
     {
         Debug.Log($"AttackFlagOnOff({No}) called.");

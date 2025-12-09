@@ -112396,14 +112396,21 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: AnimEvent_EnableAttack
+    functionName: AttackFlagOnOff
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 2
+    messageOptions: 0
+  - time: 1.2666667
+    functionName: AttackFlagOnOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 1
     messageOptions: 0
-  - time: 2.2666667
-    functionName: AnimEvent_DisableAttack
+  - time: 1.4666667
+    functionName: AttackFlagOnOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

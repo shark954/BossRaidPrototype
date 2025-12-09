@@ -54,7 +54,7 @@ public class PlayerMove : NetworkBehaviour
     void Start()
     {
         //Init(); // 初期化処理
-        Debug.Log("Start(): 初期化完了");
+        //Debug.Log("Start(): 初期化完了");
 
     }
 
@@ -171,6 +171,8 @@ public class PlayerMove : NetworkBehaviour
 
             m_IsCharging = false;
             EndChargeEffect();
+            
+            m_animationSystem.m_Animator.SetBool("EnableAttack", false);
         };
 
         // 特殊攻撃（ボタン1回で発動）
@@ -268,14 +270,13 @@ public class PlayerMove : NetworkBehaviour
     {
         Debug.Log("通常攻撃をサーバーで実行");
         m_animationSystem.m_Animator.SetBool("EnableAttack", true);
-        m_animationSystem.AttackTrigger();
-
+      
         // 弾生成など
     }
 
     void DoChargeAttack()
     {
-        Debug.Log("チャージ攻撃をサーバーで実行");
+        //Debug.Log("チャージ攻撃をサーバーで実行");
 
         // チャージ弾処理
     }
