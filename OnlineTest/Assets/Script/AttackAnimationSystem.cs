@@ -18,8 +18,8 @@ public class AttackAnimationSystem : MonoBehaviour
     /// </summary>
     public void AttackTrigger()
     {
-        Debug.Log(m_Animator.GetInteger("Attack"));
-        Debug.Log(m_AttackFlag);
+        //Debug.Log(m_Animator.GetInteger("Attack"));
+        //Debug.Log(m_AttackFlag);
         //攻撃許可チェック
         if (m_AttackFlag)
         {

@@ -16,6 +16,7 @@ public class PlayerMove : NetworkBehaviour
     public float moveSpeed = 5f;      // 通常移動速度
     public float dashSpeed = 10f;     // ダッシュ速度
     public float jumpForce = 5f;      // ジャンプ時の上方向の力
+    public float evadeForce = 10f;
 
     [Header("チャージ攻撃設定")]
     public float chargeTimeThreshold = 0.4f; // チャージ攻撃判定時間（これ以上でチャージ攻撃）
@@ -178,6 +179,11 @@ public class PlayerMove : NetworkBehaviour
             if (isLocalPlayer)
                 CmdSpecialAttack();
         };
+
+        m_Controls.GamePlay.SpecialAttack.canceled += _ =>
+        {
+            m_animationSystem.m_Animator.SetBool("Skill", false);
+        };
     }
 
     // ===============================
@@ -280,7 +286,7 @@ public class PlayerMove : NetworkBehaviour
     void DoSpecialAttack()
     {
         Debug.Log("特殊攻撃をサーバーで実行");
-        m_animationSystem.m_Animator.SetTrigger("Skill");
+        m_animationSystem.m_Animator.SetBool("Skill",true);
         // スキル処理
     }
 
@@ -288,7 +294,48 @@ public class PlayerMove : NetworkBehaviour
     // === ローカルのエフェクト演出 ===
     // ===============================
 
-    void Step() => Debug.Log("ローカル：ステップ");
+    void Step()
+    {
+        // アニメーション再生用 Bool を true に
+        m_animationSystem.m_Animator.SetBool("IsEvading", true);
+
+        Vector3 evadeDirection;
+
+        if (m_MoveInput == Vector2.zero)
+        {
+            Vector3 camRight = Camera.main.transform.right;
+            camRight.y = 0f;
+            evadeDirection = -camRight.normalized;
+        }
+        else
+        {
+            Vector3 camForward = Camera.main.transform.forward;
+            camForward.y = 0f;
+            camForward.Normalize();
+
+            Vector3 camRight = Camera.main.transform.right;
+            camRight.y = 0f;
+            camRight.Normalize();
+
+            evadeDirection = (camForward * m_MoveInput.y + camRight * m_MoveInput.x).normalized;
+        }
+
+        m_Rigidbody.AddForce(evadeDirection * evadeForce, ForceMode.Impulse);
+        Debug.Log($"ローカル：ステップ - 回避方向: {evadeDirection}");
+    }
+
+    void OnEvadeEnd()
+    {
+        m_animationSystem.m_Animator.SetBool("IsEvading", false);
+    }
+
+    /*void Step()
+    {
+        m_animationSystem.m_Animator.SetTrigger("Evade");
+        m_Rigidbody.AddForce(new Vector3(m_MoveInput.x, 0, m_MoveInput.y) * evadeForce, ForceMode.Impulse);
+        Debug.Log("ローカル：ステップ");
+
+    }*/
     void Dash()
     {
         Debug.Log("ローカル：ダッシュ");

@@ -117888,7 +117888,7 @@ AnimationClip:
   - time: 1.0666667
     functionName: SEPop
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 121928, guid: 98bfe2b1b4e1c9947b9576f07c6ac840, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
