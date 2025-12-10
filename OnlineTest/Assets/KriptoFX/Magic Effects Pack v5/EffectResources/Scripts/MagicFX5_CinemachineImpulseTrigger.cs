@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if USING_CINEMACHINE
-using Cinemachine;
+using Unity.Cinemachine;
 #endif
 
 namespace MagicFX5

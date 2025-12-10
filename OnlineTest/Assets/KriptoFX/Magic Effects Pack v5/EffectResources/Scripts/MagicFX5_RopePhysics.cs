@@ -106,7 +106,7 @@ namespace MagicFX5
             if (Target == null || !UseTargetForce || TargetRigidbody == null) return;
             
             var force                                                    = GetTensionForce();
-            if (force > 0.0f) TargetRigidbody.velocity = ((GetForceEndPoint() - Target.position)) * (1 / Time.fixedDeltaTime) * Mathf.Clamp01(force);
+            if (force > 0.0f) TargetRigidbody.linearVelocity = ((GetForceEndPoint() - Target.position)) * (1 / Time.fixedDeltaTime) * Mathf.Clamp01(force);
         }
 
         void Simulate(float deltaTime)
