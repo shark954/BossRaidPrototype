@@ -155,7 +155,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _AlphaMaskRemap: {r: 2, g: 4, b: 0, a: 0}
-    - _Color: {r: 97.00585, g: 97.00585, b: 97.00585, a: 1}
+    - _Color: {r: 23.968628, g: 23.968628, b: 23.968628, a: 1}
     - _DistortScale: {r: 0.5, g: -0.03, b: 0, a: 0}
     - _DistortStrength: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _DistortionOffsetSpeed: {r: 0, g: 0, b: 0, a: 0}
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0
---- !u!114 &8567973755262276652
+--- !u!114 &4796526053364573132
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,5 +195,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  m_EditorClassIdentifier: 
   version: 10

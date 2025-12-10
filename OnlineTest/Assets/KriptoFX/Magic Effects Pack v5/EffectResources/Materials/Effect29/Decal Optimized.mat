@@ -131,7 +131,7 @@ Material:
     - _GlossyReflections: 1
     - _JumpX: 0.25
     - _JumpY: 0.25
-    - _Metallic: 0.397
+    - _Metallic: 0.033
     - _Mode: 0
     - _MultuplyAlpha: 0
     - _NoiseStrength: 0
@@ -182,25 +182,12 @@ Material:
     - _EmissionColor1: {r: 11.984314, g: 0.4392157, b: 0.0627451, a: 1}
     - _FlipbookSize: {r: 8, g: 8, b: 0, a: 0}
     - _FlowTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _MainColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    - _MainColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
     - _MainColorRemap: {r: 1, g: 1, b: 0, a: 0}
     - _MinMax: {r: 0, g: 0, b: 0, a: 0}
     - _TangentScale: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &2441187785978225463
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
-  version: 10
 --- !u!114 &2503752753341744365
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -214,3 +201,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0
+--- !u!114 &5545023081023312840
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10

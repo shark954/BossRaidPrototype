@@ -131,7 +131,7 @@ Material:
     - _GlossyReflections: 1
     - _JumpX: 0.25
     - _JumpY: 0.25
-    - _Metallic: 0.397
+    - _Metallic: 0
     - _Mode: 0
     - _MultuplyAlpha: 0
     - _NoiseStrength: 0
@@ -182,7 +182,7 @@ Material:
     - _EmissionColor1: {r: 0, g: 1.6093333, b: 11.984314, a: 1}
     - _FlipbookSize: {r: 8, g: 8, b: 0, a: 0}
     - _FlowTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _MainColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
+    - _MainColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
     - _MainColorRemap: {r: 1, g: 1, b: 0, a: 0}
     - _MinMax: {r: 0, g: 0, b: 0, a: 0}
     - _TangentScale: {r: 1, g: 1, b: 1, a: 0}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0
---- !u!114 &5023043281818698057
+--- !u!114 &7608468411760232828
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,5 +212,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  m_EditorClassIdentifier: 
   version: 10

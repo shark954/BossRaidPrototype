@@ -98,7 +98,7 @@ Material:
     - _CameraNearFadeDistance: 1
     - _CastShadows: 0
     - _ColorMode: 0
-    - _Cull: 0
+    - _Cull: 2
     - _Custout: 0.1
     - _Cutoff: 1
     - _Cutout: 0
@@ -208,7 +208,7 @@ Material:
     - _TintColor: {r: 0, g: 1.0039216, b: 23.968628, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &6338898896479477829
+--- !u!114 &1173351687314618226
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,5 +219,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  m_EditorClassIdentifier: 
   version: 10

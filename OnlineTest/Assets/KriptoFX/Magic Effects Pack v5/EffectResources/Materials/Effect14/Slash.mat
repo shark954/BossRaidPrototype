@@ -84,7 +84,7 @@ Material:
     - _Blend: 2
     - _BumpScale: 1
     - _CastShadows: 0
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _CutoutThreshold: 0.01
     - _DecalBlendFactor: 10
@@ -141,7 +141,7 @@ Material:
     - _UvFadingRemap: {r: 1, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &7639319862221476149
+--- !u!114 &4625265071925677716
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  m_EditorClassIdentifier: 
   version: 10
 --- !u!114 &8615058360661529848
 MonoBehaviour:
