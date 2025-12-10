@@ -41,11 +41,8 @@ public class PlayerMove : NetworkBehaviour
     private int m_CurrentJumpCount;              // 残ジャンプ回数
     private bool m_IsGrounded = true;            // 地面に接触しているか
 
-    private bool m_IsSprint = false;
-
     private bool m_IsCharging = false;           // チャージ攻撃中かどうか
     private float m_ChargeStartTime;             // チャージ開始時刻
-    private bool m_IsAttack = false;
 
     // ===============================
     // === Unity ライフサイクル ===
@@ -148,6 +145,7 @@ public class PlayerMove : NetworkBehaviour
             if (!isLocalPlayer) return;
             
             m_animationSystem.m_Animator.SetBool("Sprint", false);
+           
         };
 
         // 通常/チャージ攻撃
@@ -171,8 +169,7 @@ public class PlayerMove : NetworkBehaviour
 
             m_IsCharging = false;
             EndChargeEffect();
-            
-            m_animationSystem.m_Animator.SetBool("EnableAttack", false);
+          
         };
 
         // 特殊攻撃（ボタン1回で発動）
@@ -269,7 +266,6 @@ public class PlayerMove : NetworkBehaviour
     void DoNormalAttack()
     {
         Debug.Log("通常攻撃をサーバーで実行");
-        m_animationSystem.m_Animator.SetBool("EnableAttack", true);
       
         // 弾生成など
     }

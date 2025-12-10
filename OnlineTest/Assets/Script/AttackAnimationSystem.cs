@@ -18,7 +18,7 @@ public class AttackAnimationSystem : MonoBehaviour
     /// </summary>
     public void AttackTrigger()
     {
-        Debug.Log(m_Animator.GetInteger("UŒ‚"));
+        Debug.Log(m_Animator.GetInteger("Attack"));
         Debug.Log(m_AttackFlag);
         //UŒ‚‹–‰Âƒ`ƒFƒbƒN
         if (m_AttackFlag)
@@ -27,7 +27,7 @@ public class AttackAnimationSystem : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 //Animator‚ÉAyUŒ‚z‚ÌInt’l‚É+1
-                m_Animator.SetInteger("UŒ‚", m_Animator.GetInteger("UŒ‚") + 1);
+                m_Animator.SetInteger("Attack", m_Animator.GetInteger("Attack") + 1);
                 //UŒ‚‹–‰Â‚ğ“P‰ñ
                 m_AttackFlag = false;
             }
