@@ -15,34 +15,35 @@ public class PlayerMove : NetworkBehaviour
     [Header("移動設定")]
     public float moveSpeed = 5f;      // 通常移動速度
     public float dashSpeed = 10f;     // ダッシュ速度
-    public float jumpForce = 5f;      // ジャンプ時の上方向の力
-    public float evadeForce = 10f;
+    public float jumpForce = 5f;      // ジャンプ力
+    public float evadeForce = 10f;    // 回避時の力（未使用）
 
     [Header("チャージ攻撃設定")]
-    public float chargeTimeThreshold = 0.4f; // チャージ攻撃判定時間（これ以上でチャージ攻撃）
+    public float chargeTimeThreshold = 0.4f; // チャージ攻撃判定時間（0.4秒以上でチャージ攻撃）
 
     [Header("ジャンプ設定")]
-    public int maxJumpCount = 2;      // ジャンプ可能回数（二段ジャンプなど）
+    public int maxJumpCount = 2;      // ジャンプ可能回数（二段ジャンプ対応）
 
     [Header("地面判定")]
     public float groundCheckDistance = 0.1f; // 地面との距離チェック長さ
-    public LayerMask groundLayer;            // 地面判定に使うレイヤー
-    
-  
-    public AttackAnimationSystem m_animationSystem;
+    public LayerMask groundLayer;            // 地面と判定するレイヤー
+
+    public AttackAnimationSystem m_animationSystem; // アニメーション制御クラス
+
     // ===============================
     // === プライベート変数群（m_）===
     // ===============================
 
-   
     private Rigidbody m_Rigidbody;               // プレイヤーのRigidbody
-    private PlayerControl m_Controls;            // InputSystemで生成される操作クラス
-    private Vector2 m_MoveInput;                 // 入力方向（X,Z）
+    private PlayerControl m_Controls;            // 新InputSystemの入力クラス
+    private Vector2 m_MoveInput;                 // 移動入力値（X,Z）
 
     private int m_CurrentJumpCount;              // 残ジャンプ回数
-    private bool m_IsGrounded = true;            // 地面に接触しているか
+    private bool m_IsGrounded = true;            // 地面に接しているか
 
-    private bool m_IsCharging = false;           // チャージ攻撃中かどうか
+    private bool m_CanEvade = true;
+
+    private bool m_IsCharging = false;           // チャージ攻撃中か
     private float m_ChargeStartTime;             // チャージ開始時刻
 
     // ===============================
@@ -51,59 +52,56 @@ public class PlayerMove : NetworkBehaviour
 
     void Start()
     {
-        //Init(); // 初期化処理
-        //Debug.Log("Start(): 初期化完了");
-
+        // Startでは初期化せず、権限取得時に初期化
     }
 
     /// <summary>
-    /// プレイヤーの初期設定（Rigidbody、Input、ジャンプ回数など）
+    /// プレイヤーの初期設定（Rigidbodyや入力クラス、ジャンプ回数）
     /// </summary>
     void Init()
     {
         m_CurrentJumpCount = maxJumpCount;
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Controls = new PlayerControl();
-      
-        SetupInput(); // 入力イベントの登録
+        SetupInput(); // 入力イベントを設定
     }
 
     /// <summary>
-    /// クライアントが操作権限を持った時に呼ばれる（入力有効化）
+    /// クライアントが操作権限を得たときに呼ばれる（自分のプレイヤー時）
     /// </summary>
     public override void OnStartAuthority()
     {
-        Init();
+        Init(); // 入力などの初期化
         m_Controls.GamePlay.Enable();
+        Cursor.lockState = CursorLockMode.Locked; // カーソル非表示＆ロック
+        Cursor.visible = false;
     }
 
     /// <summary>
-    /// 無効化時に入力を解除
+    /// 無効化時に入力も無効化
     /// </summary>
     void OnDisable()
     {
         m_Controls?.GamePlay.Disable();
     }
 
-    /// <summary>
-    /// 固定更新：移動・地面チェック・回避時間の更新を行う
-    /// </summary>
     void FixedUpdate()
     {
         if (!isLocalPlayer) return;
 
-        HandleGroundCheck();
-        HandleMovement();
-        
+        HandleGroundCheck(); // 地面判定
+        HandleMovement();    // 移動処理
     }
 
     /// <summary>
-    /// 地面と衝突したときに接地状態にする
+    /// 地面と接触したときの処理（アニメーションリセット）
     /// </summary>
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
             m_IsGrounded = true;
+
+        // アニメーションリセット
         m_animationSystem.m_Animator.SetBool("JumpPush", false);
         m_animationSystem.m_Animator.SetBool("DoubleJumpPush", false);
     }
@@ -113,40 +111,38 @@ public class PlayerMove : NetworkBehaviour
     // ===============================
 
     /// <summary>
-    /// 新InputSystemでの各入力イベントを登録
+    /// 各入力イベントを設定
     /// </summary>
     void SetupInput()
     {
-        // 移動入力
+        // 移動
         m_Controls.GamePlay.Move.performed += ctx => m_MoveInput = ctx.ReadValue<Vector2>();
         m_Controls.GamePlay.Move.canceled += _ => m_MoveInput = Vector2.zero;
 
-        // ジャンプ入力
+        // ジャンプ
         m_Controls.GamePlay.Jump.performed += _ =>
         {
             if (isLocalPlayer)
                 TryJump();
         };
 
-        // ステップ（Evade は performed のみでOK）
+        // 回避
         m_Controls.GamePlay.Evade.performed += _ =>
         {
             if (!isLocalPlayer) return;
-            Step();
+            Step(); // 回避動作
         };
 
+        // ダッシュ
         m_Controls.GamePlay.Sprint.started += _ =>
         {
             if (!isLocalPlayer) return;
-            Dash();
+            Dash(); // ダッシュ開始
         };
-
         m_Controls.GamePlay.Sprint.canceled += _ =>
         {
             if (!isLocalPlayer) return;
-            
             m_animationSystem.m_Animator.SetBool("Sprint", false);
-           
         };
 
         // 通常/チャージ攻撃
@@ -157,29 +153,26 @@ public class PlayerMove : NetworkBehaviour
             m_ChargeStartTime = Time.time;
             StartChargeEffect();
         };
-
         m_Controls.GamePlay.Attack.canceled += _ =>
         {
             if (!isLocalPlayer || !m_IsCharging) return;
 
             float held = Time.time - m_ChargeStartTime;
             if (held >= chargeTimeThreshold)
-                CmdChargeAttack();
+                CmdChargeAttack();  // チャージ攻撃
             else
-                CmdNormalAttack();
+                CmdNormalAttack();  // 通常攻撃
 
             m_IsCharging = false;
             EndChargeEffect();
-          
         };
 
-        // 特殊攻撃（ボタン1回で発動）
+        // 特殊攻撃
         m_Controls.GamePlay.SpecialAttack.performed += _ =>
         {
             if (isLocalPlayer)
                 CmdSpecialAttack();
         };
-
         m_Controls.GamePlay.SpecialAttack.canceled += _ =>
         {
             m_animationSystem.m_Animator.SetBool("Skill", false);
@@ -191,29 +184,27 @@ public class PlayerMove : NetworkBehaviour
     // ===============================
 
     /// <summary>
-    /// ジャンプ処理（残ジャンプ数がある場合のみ）
+    /// ジャンプ処理
     /// </summary>
     void TryJump()
     {
         if (m_CurrentJumpCount <= 0) return;
-        m_animationSystem.m_Animator.SetBool("JumpPush",true);
-        if(!m_IsGrounded)
-        {
+
+        m_animationSystem.m_Animator.SetBool("JumpPush", true);
+        if (!m_IsGrounded)
             m_animationSystem.m_Animator.SetBool("DoubleJumpPush", true);
-        }
+
         m_Rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         m_CurrentJumpCount--;
     }
 
     /// <summary>
-    /// プレイヤーの移動処理（通常移動・ダッシュ時の速度切り替えを含む）
+    /// カメラの方向に応じた移動処理
     /// </summary>
     void HandleMovement()
     {
-
         if (Camera.main == null) return;
 
-        // カメラの前方向と右方向（Y成分を除去）
         Vector3 camForward = Camera.main.transform.forward;
         camForward.y = 0f;
         camForward.Normalize();
@@ -222,29 +213,23 @@ public class PlayerMove : NetworkBehaviour
         camRight.y = 0f;
         camRight.Normalize();
 
-        // カメラ基準の移動方向ベクトル
         Vector3 moveDir = camForward * m_MoveInput.y + camRight * m_MoveInput.x;
 
-        // AnimatorのSprintフラグから現在の移動速度を判定
         float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
 
-        // アニメーション更新
-        float animSpeed = m_MoveInput.magnitude;
-        m_animationSystem.m_Animator.SetFloat("Speed", animSpeed);
+        m_animationSystem.m_Animator.SetFloat("Speed", m_MoveInput.magnitude);
 
-        // 回転（移動している方向に向く）
         if (moveDir != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
         }
 
-        // 移動
         m_Rigidbody.MovePosition(transform.position + moveDir.normalized * moveSpeedValue * Time.fixedDeltaTime);
     }
 
     /// <summary>
-    /// 地面判定用Raycast。着地時はジャンプ回数リセット。
+    /// 地面との接触チェック、着地時はジャンプ回数をリセット
     /// </summary>
     void HandleGroundCheck()
     {
@@ -255,94 +240,63 @@ public class PlayerMove : NetworkBehaviour
             m_CurrentJumpCount = maxJumpCount;
     }
 
-  
     // ===============================
     // === サーバー側の攻撃処理 ===
     // ===============================
 
-    [Command]
-    void CmdNormalAttack() => DoNormalAttack();
-
-    [Command]
-    void CmdChargeAttack() => DoChargeAttack();
-
-    [Command]
-    void CmdSpecialAttack() => DoSpecialAttack();
+    [Command] void CmdNormalAttack() => DoNormalAttack();
+    [Command] void CmdChargeAttack() => DoChargeAttack();
+    [Command] void CmdSpecialAttack() => DoSpecialAttack();
 
     void DoNormalAttack()
     {
         Debug.Log("通常攻撃をサーバーで実行");
-      
-        // 弾生成など
+        // 弾生成などの処理を書く
     }
 
     void DoChargeAttack()
     {
-        //Debug.Log("チャージ攻撃をサーバーで実行");
-
-        // チャージ弾処理
+        // チャージ攻撃処理を書く
     }
 
     void DoSpecialAttack()
     {
         Debug.Log("特殊攻撃をサーバーで実行");
-        m_animationSystem.m_Animator.SetBool("Skill",true);
-        // スキル処理
+        m_animationSystem.m_Animator.SetBool("Skill", true);
+        // スキルの発動処理を書く
     }
 
     // ===============================
-    // === ローカルのエフェクト演出 ===
+    // === ローカルの演出系処理 ===
     // ===============================
 
+    /// <summary>
+    /// 回避（ステップ）処理
+    /// </summary>
     void Step()
     {
-        // アニメーション再生用 Bool を true に
-        m_animationSystem.m_Animator.SetBool("IsEvading", true);
+        m_CanEvade = false;
 
-        Vector3 evadeDirection;
-
-        if (m_MoveInput == Vector2.zero)
-        {
-            Vector3 camRight = Camera.main.transform.right;
-            camRight.y = 0f;
-            evadeDirection = -camRight.normalized;
-        }
-        else
-        {
-            Vector3 camForward = Camera.main.transform.forward;
-            camForward.y = 0f;
-            camForward.Normalize();
-
-            Vector3 camRight = Camera.main.transform.right;
-            camRight.y = 0f;
-            camRight.Normalize();
-
-            evadeDirection = (camForward * m_MoveInput.y + camRight * m_MoveInput.x).normalized;
-        }
-
-        m_Rigidbody.AddForce(evadeDirection * evadeForce, ForceMode.Impulse);
-        Debug.Log($"ローカル：ステップ - 回避方向: {evadeDirection}");
+        m_animationSystem.m_Animator.SetTrigger("IsEvading");
     }
 
-    void OnEvadeEnd()
-    {
-        m_animationSystem.m_Animator.SetBool("IsEvading", false);
-    }
 
-    /*void Step()
-    {
-        m_animationSystem.m_Animator.SetTrigger("Evade");
-        m_Rigidbody.AddForce(new Vector3(m_MoveInput.x, 0, m_MoveInput.y) * evadeForce, ForceMode.Impulse);
-        Debug.Log("ローカル：ステップ");
-
-    }*/
+    /// <summary>
+    /// ダッシュ処理（アニメーション変更のみ）
+    /// </summary>
     void Dash()
     {
         Debug.Log("ローカル：ダッシュ");
-        
         m_animationSystem.m_Animator.SetBool("Sprint", true);
-        
-    }  
+    }
+
+    /// <summary>
+    /// チャージ演出開始
+    /// </summary>
     void StartChargeEffect() => Debug.Log("ローカル：チャージ開始");
+
+    /// <summary>
+    /// チャージ演出終了
+    /// </summary>
     void EndChargeEffect() => Debug.Log("ローカル：チャージ終了");
 }

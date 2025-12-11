@@ -125,7 +125,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""id"": ""fb372229-ba4b-4415-b44c-d32832d7dcae"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.3,pressPoint=0.5)"",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -282,7 +282,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""d8201846-05ec-49c2-b1b5-b99b9fb4ca94"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Evade"",

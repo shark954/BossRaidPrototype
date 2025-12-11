@@ -955,9 +955,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   moveSpeed: 1
-  dashSpeed: 5
+  dashSpeed: 10
   jumpForce: 3.5
-  evadeForce: 10
+  evadeForce: 30
   chargeTimeThreshold: 0.4
   maxJumpCount: 2
   groundCheckDistance: 0.1
