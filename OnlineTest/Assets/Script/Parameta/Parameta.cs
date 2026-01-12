@@ -1,17 +1,17 @@
 using UnityEngine;
-using Mirror;
 using TMPro;
 
-public class Parameta : NetworkBehaviour
+/// <summary>
+/// プレイヤーのステータス管理（シングルプレイ版）
+/// </summary>
+public class Parameta : MonoBehaviour
 {
-    [SyncVar]
     [Header("陣営")]
     public string m_team;
-    
-    [SyncVar(hook =nameof(OnHpChanged))]
+
     [Header("体力")]
     public int m_hp;
-    [SyncVar]
+
     [Header("最大体力")]
     public int m_Maxhp;
 
@@ -20,89 +20,100 @@ public class Parameta : NetworkBehaviour
 
     [Header("死んだときのアニメーション")]
     public Animator m_animator;
+
     [Header("エフェクト")]
     public GameObject m_effect;
+
     [Header("エフェクト消滅時間")]
     public float m_effectdel;
 
     public HPbar m_hpBar;
 
-    //public GameData gameData;
     public GameManager m_gameManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         HpReset();
 
-        if (isLocalPlayer && m_hpBar != null)
+        if (m_hpBar != null)
         {
-            m_hpBar.SetParameta(this);
+            m_hpBar.SetParameta(this); // HPバーに自身をセット
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isLocalPlayer && Input.GetKeyDown(KeyCode.H))
+        // テスト用：Hキーで10ダメージ
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            if (isServer)
-                m_hp -= 10; // hookが呼ばれ、スライダーも動く
+            ApplyDamage(10, "Enemy");
         }
     }
 
+    /// <summary>
+    /// HPを最大にリセットし、死亡状態も初期化
+    /// </summary>
     public void HpReset()
     {
         m_hp = m_Maxhp;
         m_death = false;
+        OnHpChanged(); // HPバー更新
     }
 
-    [Server]//サーバーで処理
-    public bool Hitdamage(int damage, string teams)
+    /// <summary>
+    /// ダメージを受けて体力を減らす。敵味方の判定あり。
+    /// </summary>
+    public bool ApplyDamage(int damage, string attackerTeam)
     {
-        bool flag = false;
-        if (!m_death)
+        if (m_death) return false;
+        if (m_team == attackerTeam) return false;
+
+        m_hp -= damage;
+        if (m_hp <= 0)
         {
-            if (m_team != teams)
-            {
-                flag = true;
-                m_hp -= damage;
-                if (m_hpBar != null)
-                {
-                    //m_hpBar.HpCeack();
-                }
-                if (m_hp <= 0)
-                {
-                    m_hp = 0;
-                    m_death = true;
-                    //animator.SetBool("Death", death);
-                    Debug.Log("HPが0になったよーー");
-                }
-            }
+            m_hp = 0;
+            m_death = true;
+
+            // 死亡アニメーションなど
+            if (m_animator != null)
+                m_animator.SetBool("Death", true);
+
+            Debug.Log("HPが0になったよーー");
         }
-        return flag;
+
+        OnHpChanged(); // HPバー更新
+        return true;
     }
 
-    void OnHpChanged(int oldHp, int newHp)
+    /// <summary>
+    /// HPが変化したときに呼ぶ。UIなどを更新。
+    /// </summary>
+    void OnHpChanged()
     {
         if (m_hpBar != null)
         {
-            m_hpBar.HpCeack(); // UI更新など
+            m_hpBar.HpCeack(); // UI反映など
         }
     }
 
+    /// <summary>
+    /// 一定時間後にプレイヤーを削除
+    /// </summary>
     public void Die(float destroyTime)
     {
         if (!this.gameObject.CompareTag("PlayerDummy"))
             Destroy(this.gameObject, destroyTime);
+
         Debug.Log("消えた");
     }
 
-
+    /// <summary>
+    /// 死亡時のエフェクトを生成して削除
+    /// </summary>
     private void OnDestroy()
     {
-        if (!m_effect)
-            return;
+        if (!m_effect) return;
+
         GameObject Dummy = Instantiate(m_effect, transform.position, transform.rotation);
         Debug.Log("エフェクト");
         Destroy(Dummy, m_effectdel);

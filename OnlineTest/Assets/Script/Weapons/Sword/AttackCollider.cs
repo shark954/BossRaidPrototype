@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
 /// <summary>
 /// 攻撃用コライダー: 衝突処理を管理し、ダメージを適用するクラス。
@@ -51,7 +50,7 @@ public class AttackCollider : MonoBehaviour
     /// 攻撃コライダーが他のコライダーに衝突した際に実行される処理。
     /// </summary>
     /// <param name="other">衝突したコライダー</param>
-    [ServerCallback]
+ 
     private void OnTriggerEnter(Collider other)
     {
 
@@ -73,7 +72,7 @@ public class AttackCollider : MonoBehaviour
 
         // ダメージ計算: 武器の基本ダメージとチャージに応じた追加パワーを含める
         int DMG = CalculateDamage(m_weapon.m_Damage, m_weapon.m_AddPower, m_weapon.m_ChargeCount);
-        parameta.Hitdamage(DMG, m_team);
+        parameta.ApplyDamage(DMG, m_team);
 
         // 最近ヒットしたターゲットのリストに追加し、無敵時間を開始
         m_recentlyHitTargets.Add(other);

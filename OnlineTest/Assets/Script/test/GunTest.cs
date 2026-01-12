@@ -1,6 +1,4 @@
 using UnityEngine;
-using Mirror;
-
 public class GunTest : MonoBehaviour
 {
     [SerializeField]

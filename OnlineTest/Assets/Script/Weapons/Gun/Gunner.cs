@@ -1,36 +1,34 @@
 using UnityEngine;
-using Mirror;
 
 /// <summary>
-/// ガンナーの武器スクリプト。
-/// 弾丸の発射、チャージ段階の管理、スキルエフェクトなどを制御する。
+/// ガンナーの武器スクリプト（シングルプレイ用）
+/// 弾丸発射、チャージ管理、スキルエフェクト制御
 /// </summary>
 public class Gunner : MonoBehaviour, IWeapon
 {
     [Header("武器データ（ScriptableObject）")]
-    public GunnerClassData m_weaponData; // ガンナー専用の武器パラメータ
+    public GunnerClassData m_weaponData; // 武器ステータス
 
-    [SerializeField] private Transform m_firePointLeft; //  左
-    [SerializeField] private Transform m_firePointRight; //　右
+    [SerializeField] private Transform m_firePointLeft;
+    [SerializeField] private Transform m_firePointRight;
     [SerializeField] private float m_fireInterval = 0.1f;
     private float m_nextFireTime = 0f;
 
-
     [Header("発射位置")]
-    [SerializeField] private Transform m_firePoint; // 弾の発射位置（銃口など）
+    [SerializeField] private Transform m_firePoint;
 
     [Header("チャージ状態")]
-    public int m_chargeCount = 0;       // 現在のチャージ段階（威力に影響）
-    public bool m_triggerOn = false;    // チャージ制御用のトリガー（連続チャージ防止）
+    public int m_chargeCount = 0;
+    public bool m_triggerOn = false;
 
     private bool m_isLeftNext = true;
 
     void Awake()
     {
-        // 初期化処理が必要ならここに記述
+        // 必要に応じて初期化
     }
 
-    // IWeaponインターフェースの実装
+    // IWeapon インターフェース実装
     public int m_Damage => m_weaponData.m_baseDamage;
     public float m_AddPower => m_weaponData.m_chargeMultiplier;
     public int m_ChargeCount { get => m_chargeCount; set => m_chargeCount = value; }
@@ -43,23 +41,23 @@ public class Gunner : MonoBehaviour, IWeapon
     public WeaponType GetWeaponType() => WeaponType.Gunner;
 
     /// <summary>
-    /// 通常攻撃：弾丸を発射
+    /// 通常攻撃：左右交互に弾丸発射
     /// </summary>
-
     public void Use()
     {
         if (Time.time < m_nextFireTime) return;
 
         Transform firePoint = m_isLeftNext ? m_firePointLeft : m_firePointRight;
+
         GameObject bullet = Instantiate(m_weaponData.m_bulletPrefab, firePoint.position, firePoint.rotation);
-        NetworkServer.Spawn(bullet);
+        SetupBullet(bullet);
 
         m_nextFireTime = Time.time + m_fireInterval;
         m_isLeftNext = !m_isLeftNext;
     }
 
     /// <summary>
-    /// 弾を生成し、ネットワーク越しに発射する
+    /// 単独の弾発射処理（中央発射点使用）
     /// </summary>
     private void FireBullet()
     {
@@ -70,16 +68,22 @@ public class Gunner : MonoBehaviour, IWeapon
         }
 
         GameObject bullet = Instantiate(m_weaponData.m_bulletPrefab, m_firePoint.position, m_firePoint.rotation);
-        NetworkServer.Spawn(bullet); // Mirrorを使って全クライアントに生成
+        SetupBullet(bullet);
+    }
 
+    /// <summary>
+    /// 弾に色や設定を適用
+    /// </summary>
+    private void SetupBullet(GameObject bullet)
+    {
         if (bullet.TryGetComponent<Bullet>(out Bullet bulletComp))
         {
-            bulletComp.SetColor(Color.red); // 弾の色設定など、必要に応じて調整
+            bulletComp.SetColor(Color.red); // 必要に応じて変更
         }
     }
 
     /// <summary>
-    /// チャージ処理（段階的に強化）
+    /// チャージ段階を1つ進める（最大チャージ回数まで）
     /// </summary>
     public void Charge()
     {
@@ -88,7 +92,6 @@ public class Gunner : MonoBehaviour, IWeapon
 
         m_chargeCount++;
 
-        // チャージエフェクト表示
         if (m_ChargeEffect)
         {
             GameObject effect = Instantiate(m_ChargeEffect, transform.position, transform.rotation);

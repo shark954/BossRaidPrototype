@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using Mirror;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -9,7 +8,7 @@ using UnityEngine.InputSystem;
 /// ・マウス操作でカメラを水平方向に回転
 /// ・プレイヤーが生成された後に CameraPoint を検索して設定する
 /// </summary>
-public class PlayerCameraFollow : NetworkBehaviour
+public class PlayerCameraFollow : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera cineCam; // シーン上の Cinemachine カメラ
     public float rotationSpeed = 100f;                  // カメラ回転速度（マウス感度）
@@ -20,16 +19,15 @@ public class PlayerCameraFollow : NetworkBehaviour
     // Start：ローカルプレイヤーのみ Input の初期化
     void Start()
     {
-        if (isLocalPlayer)
-        {
+      
             m_Controls = new PlayerControl();
             m_Controls.GamePlay.Enable(); // Look入力を有効化
-        }
+        
     }
 
     void Update()
     {
-        if (!isLocalPlayer) return; // 自分のキャラ以外は無視
+       
 
         // カメラが未設定なら CameraPoint を探して設定（毎フレーム1回チェック）
         if (!isCameraSet && cineCam != null)
