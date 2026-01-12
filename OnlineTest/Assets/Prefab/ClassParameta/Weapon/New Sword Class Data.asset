@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc09ecb6e4384804993c5d1c19deeb87, type: 3}
   m_Name: New Sword Class Data
   m_EditorClassIdentifier: 
-  className: 
-  baseDamage: 0
-  chargeMultiplier: 0
-  maxChargeCount: 3
-  ChargeEffectDelTime: 0
-  AttackEffectDelTime: 0
-  attackEffectPrefab: {fileID: 0}
-  chargeEffectPrefab: {fileID: 0}
-  attackSpeed: 0
-  comboResetTime: 0
-  slashSkillCooldown: 0
-  slashSkillPrefab: {fileID: 0}
+  m_className: Sword
+  m_baseDamage: 50
+  m_chargeMultiplier: 1.25
+  m_maxChargeCount: 3
+  m_ChargeEffectDelTime: 0
+  m_AttackEffectDelTime: 0
+  m_attackEffectPrefab: {fileID: 0}
+  m_chargeEffectPrefab: {fileID: 0}
+  m_attackSpeed: 0
+  m_comboResetTime: 0
+  m_slashSkillCooldown: 0
+  m_slashSkillPrefab: {fileID: 0}
