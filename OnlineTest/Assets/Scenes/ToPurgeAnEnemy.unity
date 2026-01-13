@@ -291,6 +291,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5048204896833918245, guid: b11fac4f83f899240913e42723727aca, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048204896833918245, guid: b11fac4f83f899240913e42723727aca, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048204896833918245, guid: b11fac4f83f899240913e42723727aca, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6324779462227652364, guid: b11fac4f83f899240913e42723727aca, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1988,7 +2000,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1558055342}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.81333333
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
