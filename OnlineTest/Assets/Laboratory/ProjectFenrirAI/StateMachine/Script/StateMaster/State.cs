@@ -32,7 +32,6 @@ namespace StateMachineAI
         ///UnityでのStart()関数と同じもの
         public virtual void Enter()
         {
-
         }
 
         ///このステートである間、毎フレーム呼ばれる

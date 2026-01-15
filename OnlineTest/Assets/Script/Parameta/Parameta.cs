@@ -46,7 +46,7 @@ public class Parameta : MonoBehaviour
         // テスト用：Hキーで10ダメージ
         if (Input.GetKeyDown(KeyCode.H))
         {
-            ApplyDamage(10, "Enemy");
+            HitDamage(10, "Enemy");
         }
     }
 
@@ -63,7 +63,7 @@ public class Parameta : MonoBehaviour
     /// <summary>
     /// ダメージを受けて体力を減らす。敵味方の判定あり。
     /// </summary>
-    public bool ApplyDamage(int damage, string attackerTeam)
+    public bool HitDamage(int damage, string attackerTeam)
     {
         if (m_death) return false;
         if (m_team == attackerTeam) return false;

@@ -35,9 +35,6 @@ namespace StateMachineAI
                 m_Times += 1.0f * Time.deltaTime;
             }
         }
-        public override void Exit()
-        {
-            owner.m_Counter++;
-        }
+        public override void Exit() { }
     }
 }
