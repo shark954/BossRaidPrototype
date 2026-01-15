@@ -23,7 +23,7 @@ public class SlashHitbox : MonoBehaviour
         // Parameta が付いているオブジェクトに当たったらダメージを与える
         if (other.TryGetComponent<Parameta>(out var param))
         {
-            param.ApplyDamage(m_damage, "YourTeam"); // チーム名はスキル側から渡すのが理想
+            param.HitDamage(m_damage, "YourTeam"); // チーム名はスキル側から渡すのが理想
             Destroy(gameObject); // ヒット後に削除
         }
     }

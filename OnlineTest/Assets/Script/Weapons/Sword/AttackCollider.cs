@@ -72,7 +72,7 @@ public class AttackCollider : MonoBehaviour
 
         // ダメージ計算: 武器の基本ダメージとチャージに応じた追加パワーを含める
         int DMG = CalculateDamage(m_weapon.m_Damage, m_weapon.m_AddPower, m_weapon.m_ChargeCount);
-        parameta.ApplyDamage(DMG, m_team);
+        parameta.HitDamage(DMG, m_team);
 
         // 最近ヒットしたターゲットのリストに追加し、無敵時間を開始
         m_recentlyHitTargets.Add(other);
