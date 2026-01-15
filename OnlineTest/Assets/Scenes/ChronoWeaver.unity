@@ -2430,6 +2430,10 @@ PrefabInstance:
       propertyPath: 'm_enemyManagers.Array.data[0]'
       value: 
       objectReference: {fileID: 497942907}
+    - target: {fileID: 1976899188992859476, guid: ad940e9bed697424e8d4b6dbf1200945, type: 3}
+      propertyPath: 'm_enemyManagers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7822498302872913438, guid: ad940e9bed697424e8d4b6dbf1200945, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

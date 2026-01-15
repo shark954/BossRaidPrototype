@@ -58,9 +58,14 @@ public class GameManager : MonoBehaviour
             UpdateGameTimer();
 
         // ゲーム終了処理（クリア or オーバー）
-        if (m_Clearflag) GameClear();
-        if (m_Overflag) GameOver();
-
+        if (m_Clearflag)
+        {
+            GameClear();
+        }
+        if (m_Overflag)
+        {
+            GameOver();
+        }
         // タイトル画面でのAボタン入力待機
         if (!inOut.m_flag)
             ButtonCheker();
