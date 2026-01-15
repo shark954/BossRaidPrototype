@@ -12,10 +12,6 @@ public class Sword : MonoBehaviour, IWeapon
     [Header("チャージカウント")]
     public int m_chargeCount = 0;              // 現在のチャージ段階（内部カウント）
    
-
-    [Header("スキル：斬撃飛ばし")]
-    [SerializeField] private SlashSkillController m_slashSkillController;
-
     [Header("当たり判定")]
     [SerializeField] private BoxCollider m_blead; // 刃の判定用コライダー
 
@@ -26,8 +22,7 @@ public class Sword : MonoBehaviour, IWeapon
     public AttackCollider m_attackCollider;
 
     private Rigidbody m_rb;
-    public bool triggerOn; // チャージタイミング制御用フラグ
-
+   
     void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -51,35 +46,5 @@ public class Sword : MonoBehaviour, IWeapon
         Debug.Log("剣で攻撃！");
     }
 
-    /// <summary>
-    /// 遠距離スラッシュスキルの実行
-    /// </summary>
-    public void UseSlashSkill()
-    {
-        if (m_slashSkillController != null)
-        {
-            m_slashSkillController.Fire();
-        }
-        else
-        {
-            Debug.LogWarning("SlashSkillController が設定されていません");
-        }
-    }
-
-    /// <summary>
-    /// チャージ段階を増やし、チャージエフェクトを表示
-    /// </summary>
-    public void Charge()
-    {
-        if (triggerOn || m_chargeCount >= m_weaponData.m_maxChargeCount)
-            return;
-
-        m_chargeCount++;
-
-        if (m_ChargeEffect != null)
-        {
-            GameObject dummy = Instantiate(m_ChargeEffect, transform.position, transform.rotation);
-            Destroy(dummy, m_ChargeEffectDelTime);
-        }
-    }
+  
 }

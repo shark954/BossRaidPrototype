@@ -47,8 +47,9 @@ MonoBehaviour:
   m_enemyPrefab: {fileID: 494155451794737261, guid: eb2e4e2a9acee4f4c9c97782f068029c, type: 3}
   m_enemyCount: 5
   m_remainingEnemiesList: []
-  m_spawnedEnemiesList: []
-  m_gameManager: {fileID: 0}
+  m_spawnedEnemiesList:
+  - {fileID: 335865212685269039, guid: ad940e9bed697424e8d4b6dbf1200945, type: 3}
+  m_gameManager: {fileID: 1976899188992859476, guid: ad940e9bed697424e8d4b6dbf1200945, type: 3}
   m_PopPos: {fileID: 1802861596631947949}
   m_spawnTime: 8
   m_spawnCool: 0

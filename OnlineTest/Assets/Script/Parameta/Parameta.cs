@@ -22,12 +22,12 @@ public class Parameta : MonoBehaviour
     public Animator m_animator;
 
     [Header("エフェクト")]
-    public GameObject m_effect;
+    public GameObject m_effect = null;
 
     [Header("エフェクト消滅時間")]
     public float m_effectdel;
 
-    public HPbar m_hpBar;
+    public HPbar m_hpBar ;
 
     public GameManager m_gameManager;
 
@@ -47,6 +47,11 @@ public class Parameta : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             HitDamage(10, "Enemy");
+        }
+
+        if (m_gameManager.m_resetFlag)
+        {
+            HpReset();
         }
     }
 
@@ -101,9 +106,16 @@ public class Parameta : MonoBehaviour
     /// </summary>
     public void Die(float destroyTime)
     {
-        if (!this.gameObject.CompareTag("PlayerDummy"))
-            Destroy(this.gameObject, destroyTime);
+        // 敵だった場合は EnemyManager に通知してから破壊
+        if (m_team == "Enemy" && m_gameManager != null)
+        {
+            foreach (EnemyManager manager in m_gameManager.m_enemyManagers)
+            {
+                manager.RemoveEnemy(this.gameObject);
+            }
+        }
 
+        Destroy(this.gameObject, destroyTime);
         Debug.Log("消えた");
     }
 

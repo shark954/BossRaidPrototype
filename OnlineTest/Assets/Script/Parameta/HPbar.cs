@@ -8,7 +8,7 @@ public class HPbar : MonoBehaviour
 {
     public Slider m_hpBar;
 
-    public TextMeshProUGUI m_teamText; // 追加！
+  
 
     [SerializeField, Header("パラメータ")]
     private Parameta m_parameta;
@@ -31,11 +31,7 @@ public class HPbar : MonoBehaviour
         m_hpBar.maxValue = m_parameta.m_Maxhp;
         m_hpBar.value = m_parameta.m_hp;
 
-        // チーム名表示（ネットワーク同期済みの値）
-        if (m_teamText != null)
-        {
-            m_teamText.text = m_parameta.m_team;
-        }
+      
     }
 
     public void HpCeack()

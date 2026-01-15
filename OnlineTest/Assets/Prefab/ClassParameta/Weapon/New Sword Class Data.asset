@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: New Sword Class Data
   m_EditorClassIdentifier: 
   m_className: Sword
-  m_baseDamage: 50
+  m_baseDamage: 25
   m_chargeMultiplier: 1.25
   m_maxChargeCount: 3
   m_ChargeEffectDelTime: 0
-  m_AttackEffectDelTime: 0
-  m_attackEffectPrefab: {fileID: 0}
+  m_AttackEffectDelTime: 1
+  m_attackEffectPrefab: {fileID: 5987591639799670305, guid: 18b66ea9d48de574eb658217b305257c, type: 3}
   m_chargeEffectPrefab: {fileID: 0}
   m_attackSpeed: 0
   m_comboResetTime: 0
-  m_slashSkillCooldown: 0
   m_slashSkillPrefab: {fileID: 0}

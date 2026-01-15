@@ -53,24 +53,33 @@ public class EnemyManager : MonoBehaviour
         {
             ClearLists();
         }
+
+        CheckGameEnd();
     }
 
     // リストをクリアして残っている敵を破棄
     public void ClearLists()
     {
-        // 残機リストの全オブジェクトを破棄
+        // 残機リストの null じゃない敵だけ Destroy
         foreach (var enemy in m_remainingEnemiesList)
         {
-            if (enemy != null) Destroy(enemy);
+            if (enemy != null)
+            {
+                Destroy(enemy);
+            }
         }
 
-        // 生成済みリストの全オブジェクトを破棄
+        // 生成済みリストから Missing な GameObject を削除（null のみじゃダメ）
+        m_spawnedEnemiesList.RemoveAll(item => item == null); // ← これ重要！
+
         foreach (var enemy in m_spawnedEnemiesList)
         {
-            if (enemy != null) Destroy(enemy);
+            if (enemy != null)
+            {
+                Destroy(enemy);
+            }
         }
 
-        // 両リストをクリア
         m_remainingEnemiesList.Clear();
         m_spawnedEnemiesList.Clear();
     }
@@ -132,23 +141,30 @@ public class EnemyManager : MonoBehaviour
     // 敵の削除処理 (HPが0になった場合など)
     public void RemoveEnemy(GameObject enemy)
     {
-        if (m_spawnedEnemiesList.Contains(enemy)) // 指定された敵が生成済みリストに存在する場合
+        if (m_spawnedEnemiesList.Contains(enemy))
         {
-            m_spawnedEnemiesList.Remove(enemy); // 生成済みリストから削除
-            Destroy(enemy,5.0f); // 敵オブジェクトを破棄
+            m_spawnedEnemiesList.Remove(enemy);
+            Destroy(enemy); // Delayを付けたければ Destroy(enemy, 5f);
         }
 
-        CheckGameEnd(); // ゲーム終了条件を確認
+        // nullが混じってると CheckGameEnd が動かないので、毎回リストをクリーンアップ
+        m_spawnedEnemiesList.RemoveAll(item => item == null);
+
+        CheckGameEnd();
     }
 
     // ゲーム終了条件をチェック
     private void CheckGameEnd()
     {
-        // 残機リストと生成済みリストの両方が空である場合
+        // ★ nullになった要素をリストから除外
+        m_remainingEnemiesList.RemoveAll(e => e == null);
+        m_spawnedEnemiesList.RemoveAll(e => e == null);
+
+        Debug.Log($"[CheckGameEnd] Remaining: {m_remainingEnemiesList.Count}, Spawned: {m_spawnedEnemiesList.Count}");
+
         if (m_remainingEnemiesList.Count == 0 && m_spawnedEnemiesList.Count == 0)
         {
-            Debug.Log("Game Clear!"); // ゲームクリアを通知
-            // 必要に応じてゲームクリア処理を追加
+            Debug.Log("Game Clear!");
             m_gameManager.m_Clearflag = true;
         }
     }

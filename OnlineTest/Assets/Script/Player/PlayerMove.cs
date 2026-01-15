@@ -24,6 +24,9 @@ public class PlayerMove : MonoBehaviour
     public float groundCheckDistance = 0.1f; // 地面との距離で接地を判断
     public LayerMask groundLayer;            // 地面判定対象のレイヤー
 
+    [SerializeField]
+    private Transform m_startPos; // リスポーン位置
+
     public AttackAnimationSystem m_animationSystem; // アニメーション制御クラス参照
 
     // === プライベート変数 ===
@@ -86,6 +89,13 @@ public class PlayerMove : MonoBehaviour
 
         m_animationSystem.m_Animator.SetBool("JumpPush", false);
         m_animationSystem.m_Animator.SetBool("DoubleJumpPush", false);
+    }
+
+    // リスポーン（初期位置に戻る）
+    public void PosReset()
+    {
+        transform.position = m_startPos.position;
+        transform.rotation = m_startPos.rotation;
     }
 
     /// <summary>
