@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public AudioSource m_bgmSource;   // ゲーム用BGM音源
     public TextMeshProUGUI m_quitApp; //ゲーム終了ナビ
     public Slider m_hpBar;
+    public Parameta m_parameta;
     #endregion
 
     #region ▼【タイマー関連】
@@ -149,7 +150,7 @@ public class GameManager : MonoBehaviour
         m_Clear.SetActive(false);
         m_Over.SetActive(false);
         m_player.PosReset();
-
+        m_parameta.HpReset();
         m_timerText.enabled = false; // ← タイトル戻り時にタイマー非表示
         m_quitApp.enabled = false;
         m_hpBar.gameObject.SetActive(false);
