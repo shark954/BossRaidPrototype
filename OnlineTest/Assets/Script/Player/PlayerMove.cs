@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
 /// シングルプレイヤー用のプレイヤー移動・操作スクリプト
@@ -16,6 +18,13 @@ public class PlayerMove : MonoBehaviour
 
     [Header("チャージ攻撃設定")]
     public float chargeTimeThreshold = 0.4f; // チャージ攻撃になるまでのホールド時間
+    [Header("スキル使用条件")]
+    public int m_killCount = 0;
+    public int m_requiredKillsForSkill = 3;
+    public bool m_canUseSpecialAttack = false;
+    [Header("スキルUI")]
+    public Slider m_skillGaugeSlider;
+    public TextMeshProUGUI m_skillReadyText;
 
     [Header("ジャンプ設定")]
     public int maxJumpCount = 2;       // 最大ジャンプ回数（二段ジャンプ対応）
@@ -220,15 +229,56 @@ public class PlayerMove : MonoBehaviour
         // チャージエフェクトや強攻撃など
     }
 
+    void UpdateSkillUI()
+    {
+        // ゲージの更新
+        if (m_skillGaugeSlider != null)
+        {
+            float ratio = (float)m_killCount / m_requiredKillsForSkill;
+            m_skillGaugeSlider.value = Mathf.Clamp01(ratio);
+        }
+
+        // Ready テキスト表示制御
+        if (m_skillReadyText != null)
+        {
+            m_skillReadyText.gameObject.SetActive(m_canUseSpecialAttack);
+        }
+    }
+
+    public void OnEnemyKilled()
+    {
+        m_killCount++;
+
+        if (m_killCount >= m_requiredKillsForSkill)
+        {
+            m_canUseSpecialAttack = true;
+            Debug.Log("特殊攻撃が使用可能になりました！");
+            // UI点灯などの演出があればここ
+        }
+
+        UpdateSkillUI();
+    }
+
+
     /// <summary>
     /// 特殊攻撃の処理
     /// </summary>
     void DoSpecialAttack()
     {
+        if (!m_canUseSpecialAttack)
+        {
+            Debug.Log("まだ特殊攻撃は使えません！");
+            return;
+        }
+
         Debug.Log("特殊攻撃を実行");
         m_animationSystem.m_Animator.SetBool("Skill", true);
-        // スキルの効果や演出処理
+
+        m_canUseSpecialAttack = false;
+        m_killCount = 0;
+        UpdateSkillUI();
     }
+
 
     /// <summary>
     /// 回避（ステップ）処理

@@ -106,6 +106,17 @@ public class Parameta : MonoBehaviour
     /// </summary>
     public void Die(float destroyTime)
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            PlayerMove move = player.GetComponent<PlayerMove>();
+            if (move != null)
+            {
+                move.OnEnemyKilled();
+            }
+        }
+
+        Destroy(this.gameObject, destroyTime);
         // “G‚¾‚Á‚½ê‡‚Í EnemyManager ‚É’Ê’m‚µ‚Ä‚©‚ç”j‰ó
         if (m_team == "Enemy" && m_gameManager != null)
         {

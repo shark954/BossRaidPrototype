@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI m_quitApp; //ゲーム終了ナビ
     public Slider m_hpBar;
     public Parameta m_parameta;
+    public Slider m_skillGaugeSlider;
+    public TextMeshProUGUI m_skillReadyText;
     #endregion
 
     #region ▼【タイマー関連】
@@ -46,6 +48,8 @@ public class GameManager : MonoBehaviour
         m_timerText.enabled = false;
         m_quitApp.enabled = false;
         m_hpBar.gameObject.SetActive(false);
+        m_skillGaugeSlider.gameObject.SetActive(false);
+        m_skillReadyText.enabled = false;
 
         Title(); // タイトル画面処理へ移行（プレイヤーダミー生成）
     }
@@ -154,6 +158,8 @@ public class GameManager : MonoBehaviour
         m_timerText.enabled = false; // ← タイトル戻り時にタイマー非表示
         m_quitApp.enabled = false;
         m_hpBar.gameObject.SetActive(false);
+        m_skillGaugeSlider.gameObject.SetActive(false);
+        m_skillReadyText.enabled = false;
         inOut.m_flag = false; // フェードリセット
     }
 
@@ -186,6 +192,7 @@ public class GameManager : MonoBehaviour
         m_timerText.enabled = true;
         m_quitApp.enabled = true;
         m_hpBar.gameObject.SetActive(true);
+        m_skillGaugeSlider.gameObject.SetActive(true);
 
         if (!m_bgmSource.isPlaying)
             m_bgmSource.Play();
