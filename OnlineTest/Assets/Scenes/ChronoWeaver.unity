@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraFollow
   target: {fileID: 745416319}
-  distance: 8
+  distance: 10
   xSpeed: 10
   ySpeed: 10
   yMinLimit: 0
@@ -3216,7 +3216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_spawnTime
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_enemyCount
