@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Sword Class Data
   m_EditorClassIdentifier: 
   m_className: Sword
-  m_baseDamage: 25
+  m_baseDamage: 100
   m_chargeMultiplier: 1.25
   m_maxChargeCount: 3
   m_ChargeEffectDelTime: 0

@@ -80416,6 +80416,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 2
     messageOptions: 0
+  - time: 0
+    functionName: EnableAttackColliders
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.4333333
     functionName: AttackFlagOnOff
     data: 
@@ -80425,6 +80432,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.6666666
     functionName: AttackFlagOnOff
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.6666666
+    functionName: DisableAttackColliders
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

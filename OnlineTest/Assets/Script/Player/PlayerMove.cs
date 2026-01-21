@@ -105,6 +105,12 @@ public class PlayerMove : MonoBehaviour
     {
         transform.position = m_startPos.position;
         transform.rotation = m_startPos.rotation;
+        m_killCount = 0;
+        m_canUseSpecialAttack = false;
+        m_skillGaugeSlider.gameObject.SetActive(true);
+        m_skillReadyText.gameObject.SetActive(m_canUseSpecialAttack);
+        UpdateSkillUI();
+        
     }
 
     /// <summary>
@@ -160,6 +166,9 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     void TryJump()
     {
+        if (m_animationSystem.m_isAttackAnimationPlaying)
+            m_animationSystem.CancelAttack();
+
         if (m_CurrentJumpCount <= 0) return;
 
         m_animationSystem.m_Animator.SetBool("JumpPush", true);
@@ -175,28 +184,31 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     void HandleMovement()
     {
-        if (Camera.main == null) return;
-
-        Vector3 camForward = Camera.main.transform.forward;
-        camForward.y = 0f;
-        camForward.Normalize();
-
-        Vector3 camRight = Camera.main.transform.right;
-        camRight.y = 0f;
-        camRight.Normalize();
-
-        Vector3 moveDir = camForward * m_MoveInput.y + camRight * m_MoveInput.x;
-        float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
-
-        m_animationSystem.m_Animator.SetFloat("Speed", m_MoveInput.magnitude);
-
-        if (moveDir != Vector3.zero)
+        if (!m_animationSystem.m_isAttackAnimationPlaying)
         {
-            Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
-        }
+            if (Camera.main == null) return;
 
-        m_Rigidbody.MovePosition(transform.position + moveDir.normalized * moveSpeedValue * Time.fixedDeltaTime);
+            Vector3 camForward = Camera.main.transform.forward;
+            camForward.y = 0f;
+            camForward.Normalize();
+
+            Vector3 camRight = Camera.main.transform.right;
+            camRight.y = 0f;
+            camRight.Normalize();
+
+            Vector3 moveDir = camForward * m_MoveInput.y + camRight * m_MoveInput.x;
+            float moveSpeedValue = m_animationSystem.m_Animator.GetBool("Sprint") ? dashSpeed : moveSpeed;
+
+            m_animationSystem.m_Animator.SetFloat("Speed", m_MoveInput.magnitude);
+
+            if (moveDir != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
+            }
+
+            m_Rigidbody.MovePosition(transform.position + moveDir.normalized * moveSpeedValue * Time.fixedDeltaTime);
+        }
     }
 
     /// <summary>
@@ -285,6 +297,12 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     void Step()
     {
+        if (m_animationSystem.m_isAttackAnimationPlaying)
+        {
+            m_animationSystem.CancelAttack();
+        }
+            
+
         m_CanEvade = false;
         m_animationSystem.m_Animator.SetTrigger("IsEvading");
     }
@@ -294,6 +312,7 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     void Dash()
     {
+        if (m_animationSystem.m_isAttackAnimationPlaying) return;
         Debug.Log("ƒ_ƒbƒVƒ…");
         m_animationSystem.m_Animator.SetBool("Sprint", true);
     }

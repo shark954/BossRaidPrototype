@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackAnimationSystem : MonoBehaviour
@@ -6,7 +7,16 @@ public class AttackAnimationSystem : MonoBehaviour
     public Animator m_Animator;
     [Header("攻撃実行許可フラグ")]
     public bool m_AttackFlag = false;
+    [Header("攻撃中の移動管理")]
+    public bool m_isAttackAnimationPlaying = false;
+    [Header("攻撃時に有効にする当たり判定")]
+    public List<Collider> m_attackColliders = new List<Collider>();
    
+    private void Awake()
+    {
+        DisableAttackColliders();
+    }
+
     void Update()
     {
         //攻撃時の判定(マウス入力)
@@ -33,7 +43,38 @@ public class AttackAnimationSystem : MonoBehaviour
             }
         }
     }
-    
+
+    // 攻撃判定ON（アニメーションイベントで呼び出す）
+    public void EnableAttackColliders()
+    {
+        m_isAttackAnimationPlaying = true;
+        foreach (var col in m_attackColliders)
+        {
+            if (col != null) col.enabled = true;
+        }
+    }
+
+    // 攻撃判定OFF（アニメーションイベントで呼び出す）
+    public void DisableAttackColliders()
+    {
+        m_isAttackAnimationPlaying = false;
+        foreach (var col in m_attackColliders)
+        {
+            if (col != null) col.enabled = false;
+        }
+    }
+
+    public void CancelAttack()
+    {
+        if (m_isAttackAnimationPlaying)
+        {
+            Debug.Log("攻撃キャンセル");
+            m_isAttackAnimationPlaying = false;
+            m_Animator.SetInteger("Attack", 0);
+            DisableAttackColliders();
+        }
+    }
+
     /// <summary>
     /// Animator側からの攻撃許可・不許可フラグ
     /// </summary>

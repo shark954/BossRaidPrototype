@@ -290,7 +290,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 400, y: 100}
+  m_SizeDelta: {x: 1920, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &128116527
 MonoBehaviour:
@@ -339,13 +339,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -558,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &290128153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1523,7 +1523,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 1080, y: 100}
+  m_SizeDelta: {x: 1920, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &970989188
 MonoBehaviour:
@@ -1659,7 +1659,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 1080, y: 100}
+  m_SizeDelta: {x: 1920, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &978034724
 MonoBehaviour:
@@ -1760,6 +1760,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978034722}
   m_CullTransparentMesh: 1
+--- !u!65 &989722005 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 9168931243308219248, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+  m_PrefabInstance: {fileID: 636695573846245516}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1117422327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,6 +1801,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1181585524 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 44059433514311487, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+  m_PrefabInstance: {fileID: 636695573846245516}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203222061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,7 +1859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1271764631
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2098,6 +2108,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545525155}
   m_CullTransparentMesh: 1
+--- !u!65 &1557051908 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5491190641046997292, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+  m_PrefabInstance: {fileID: 636695573846245516}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1756389740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,7 +2367,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: 1080, y: 100}
+  m_SizeDelta: {x: 1920, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854956972
 MonoBehaviour:
@@ -2401,8 +2416,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 200
+  m_fontSizeBase: 200
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2652,6 +2667,22 @@ PrefabInstance:
       propertyPath: m_requiredKillsForSkill
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8002558248405936974, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: m_attackColliders.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002558248405936974, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: 'm_attackColliders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 989722005}
+    - target: {fileID: 8002558248405936974, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: 'm_attackColliders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1181585524}
+    - target: {fileID: 8002558248405936974, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: 'm_attackColliders.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1557051908}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2866,8 +2897,6 @@ MonoBehaviour:
   m_quitApp: {fileID: 1545525157}
   m_hpBar: {fileID: 3298617126636404097}
   m_parameta: {fileID: 973618796190540312}
-  m_skillGaugeSlider: {fileID: 374879012}
-  m_skillReadyText: {fileID: 123277153}
   m_timerText: {fileID: 774444139}
   m_timeLimit: 300
   m_gameFlag: 0
@@ -3113,6 +3142,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 206702987181744277, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 206702987181744277, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
@@ -3166,11 +3199,11 @@ PrefabInstance:
       objectReference: {fileID: 564202416}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_spawnTime
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_enemyCount
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_gameManager

@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI m_quitApp; //ゲーム終了ナビ
     public Slider m_hpBar;
     public Parameta m_parameta;
-    public Slider m_skillGaugeSlider;
-    public TextMeshProUGUI m_skillReadyText;
     #endregion
 
     #region ▼【タイマー関連】
@@ -48,8 +46,8 @@ public class GameManager : MonoBehaviour
         m_timerText.enabled = false;
         m_quitApp.enabled = false;
         m_hpBar.gameObject.SetActive(false);
-        m_skillGaugeSlider.gameObject.SetActive(false);
-        m_skillReadyText.enabled = false;
+        m_player.m_skillGaugeSlider.gameObject.SetActive(false);
+        m_player.m_skillReadyText.gameObject.SetActive(false);
 
         Title(); // タイトル画面処理へ移行（プレイヤーダミー生成）
     }
@@ -93,6 +91,8 @@ public class GameManager : MonoBehaviour
     {
         m_gameFlag = false;
         m_timerText.enabled = false;
+        m_player.m_skillGaugeSlider.gameObject.SetActive(false);
+        m_player.m_skillReadyText.gameObject.SetActive(false);
         m_hpBar.gameObject.SetActive(false);
         m_Clear.SetActive(true); // クリア画面表示
 
@@ -111,6 +111,8 @@ public class GameManager : MonoBehaviour
     {
         m_gameFlag = false;
         m_timerText.enabled = false;
+        m_player.m_skillGaugeSlider.gameObject.SetActive(false);
+        m_player.m_skillReadyText.gameObject.SetActive(false);
         m_hpBar.gameObject.SetActive(false);
         m_Over.SetActive(true); // オーバー画面表示
 
@@ -134,10 +136,10 @@ public class GameManager : MonoBehaviour
         
         m_Clearflag = false;
         m_Overflag = false;
-
         m_Clear.SetActive(false);
         m_Over.SetActive(false);
-        m_player.PosReset();          // プレイヤー初期位置に戻す
+        m_player.m_skillGaugeSlider.gameObject.SetActive(false);
+        m_player.m_skillReadyText.gameObject.SetActive(false);
 
         SetUP();                      // ゲーム再セットアップ
     }
@@ -153,13 +155,13 @@ public class GameManager : MonoBehaviour
 
         m_Clear.SetActive(false);
         m_Over.SetActive(false);
-        m_player.PosReset();
         m_parameta.HpReset();
         m_timerText.enabled = false; // ← タイトル戻り時にタイマー非表示
         m_quitApp.enabled = false;
         m_hpBar.gameObject.SetActive(false);
-        m_skillGaugeSlider.gameObject.SetActive(false);
-        m_skillReadyText.enabled = false;
+        m_player.m_skillGaugeSlider.gameObject.SetActive(false);
+        m_player.m_skillReadyText.gameObject.SetActive(false);
+        inOut.m_alpha = 1;
         inOut.m_flag = false; // フェードリセット
     }
 
@@ -192,7 +194,7 @@ public class GameManager : MonoBehaviour
         m_timerText.enabled = true;
         m_quitApp.enabled = true;
         m_hpBar.gameObject.SetActive(true);
-        m_skillGaugeSlider.gameObject.SetActive(true);
+        m_player.PosReset();
 
         if (!m_bgmSource.isPlaying)
             m_bgmSource.Play();
