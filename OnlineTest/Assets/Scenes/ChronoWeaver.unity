@@ -3198,17 +3198,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 564202416}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
+      propertyPath: m_portalDel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_spawnTime
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_enemyCount
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_gameManager
       value: 
       objectReference: {fileID: 3170796500419298793}
+    - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
+      propertyPath: m_portalEffect
+      value: 
+      objectReference: {fileID: 7761031033666763820, guid: 1eb833340b41fb444b576c4dced8d4dc, type: 3}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_spawnedEnemiesList.Array.size
       value: 0
