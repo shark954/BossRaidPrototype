@@ -705,11 +705,11 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.237, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1653406240897579481}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -764,29 +764,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0790f7f0c0a930f43a09f7584c6c5fd5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  ShowDebugText: 0
-  ShowCameraFrustum: 1
-  IgnoreTimeScale: 0
-  WorldUpOverride: {fileID: 0}
-  ChannelMask: -1
-  UpdateMethod: 2
-  BlendUpdateMethod: 1
-  LensModeOverride:
-    Enabled: 0
-    DefaultMode: 2
-  DefaultBlend:
-    Style: 1
-    Time: 2
-    CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  CustomBlends: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraFollow
+  target: {fileID: 745416319}
+  distance: 8
+  xSpeed: 10
+  ySpeed: 10
+  yMinLimit: 0
+  yMaxLimit: 90
 --- !u!1 &374879010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,6 +1210,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740295373}
   m_CullTransparentMesh: 1
+--- !u!4 &745416319 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8318552252402928892, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+  m_PrefabInstance: {fileID: 636695573846245516}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &774444137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1400,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &863494781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3483446946373019015, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+  m_PrefabInstance: {fileID: 636695573846245516}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &925102923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2683,9 +2679,21 @@ PrefabInstance:
       propertyPath: 'm_attackColliders.Array.data[2]'
       value: 
       objectReference: {fileID: 1557051908}
+    - target: {fileID: 9049172813899430575, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049172813899430575, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: cameraTarget
+      value: 
+      objectReference: {fileID: 863494781}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3704241583004652005, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 667531703080944136, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 330585546}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
 --- !u!222 &940685174648597620
@@ -2764,6 +2772,11 @@ MonoBehaviour:
 --- !u!95 &1653406240897579480 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1692983742215855668, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+  m_PrefabInstance: {fileID: 636695573846245516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1653406240897579481 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 667531703080944136, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
   m_PrefabInstance: {fileID: 636695573846245516}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1662898376424115518
@@ -3279,7 +3292,6 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 925102926}

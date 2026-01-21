@@ -1,57 +1,57 @@
 using UnityEngine;
-using Unity.Cinemachine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// プレイヤーに追従する Cinemachine カメラ制御
-/// ・プレイヤー後方の CameraPoint に追従・注視
-/// ・マウス操作でカメラを水平方向に回転
-/// ・プレイヤーが生成された後に CameraPoint を検索して設定する
-/// </summary>
-public class PlayerCameraFollow : MonoBehaviour
+public class PlayerCameraOrbit : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera cineCam; // シーン上の Cinemachine カメラ
-    public float rotationSpeed = 100f;                  // カメラ回転速度（マウス感度）
+    public Transform target;                 // CameraPoint（注視点）
+    public float distance = 5.0f;            // ターゲットとの距離
+    public float xSpeed = 120.0f;            // 水平方向回転速度
+    public float ySpeed = 120.0f;            // 垂直方向回転速度
+    public float yMinLimit = -20f;           // 垂直回転の下限
+    public float yMaxLimit = 80f;            // 垂直回転の上限
 
-    private PlayerControl m_Controls;                   // 新InputSystemの操作マップ
-    private bool isCameraSet = false;                   // カメラが一度設定されたかどうか
+    private float x = 0.0f;                  // 現在のX回転
+    private float y = 0.0f;                  // 現在のY回転
 
-    // Start：ローカルプレイヤーのみ Input の初期化
+    private PlayerControl m_Controls;
+
     void Start()
     {
-      
-            m_Controls = new PlayerControl();
-            m_Controls.GamePlay.Enable(); // Look入力を有効化
-        
+        m_Controls = new PlayerControl();
+        m_Controls.GamePlay.Enable();
+
+        Vector3 angles = transform.eulerAngles;
+        x = angles.y;
+        y = angles.x;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    void LateUpdate()
     {
-       
-
-        // カメラが未設定なら CameraPoint を探して設定（毎フレーム1回チェック）
-        if (!isCameraSet && cineCam != null)
+        if (target == null)
         {
-            GameObject cameraPoint = GameObject.FindGameObjectWithTag("CameraPoint");
-            if (cameraPoint != null)
+            GameObject obj = GameObject.FindGameObjectWithTag("CameraPoint");
+            if (obj != null)
             {
-                cineCam.Follow = cameraPoint.transform;
-                cineCam.LookAt = cameraPoint.transform;
-                isCameraSet = true;
-                Debug.Log("CameraPoint をカメラに設定しました");
+                target = obj.transform;
             }
         }
 
-        // カメラ設定済みなら、マウスのX入力でカメラを回転
-        if (isCameraSet && m_Controls != null)
+        if (target != null)
         {
             Vector2 look = m_Controls.GamePlay.Look.ReadValue<Vector2>();
 
-            if (Mathf.Abs(look.x) > 0.01f)
-            {
-                // カメラのTransformを Y軸まわりに回転
-                cineCam.transform.Rotate(Vector3.up, look.x * rotationSpeed * Time.deltaTime);
-            }
+            x += look.x * xSpeed * Time.deltaTime;
+            y -= look.y * ySpeed * Time.deltaTime;
+            y = Mathf.Clamp(y, yMinLimit, yMaxLimit);
+
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+            Vector3 position = rotation * negDistance + target.position;
+
+            transform.rotation = rotation;
+            transform.position = position;
         }
     }
 }
