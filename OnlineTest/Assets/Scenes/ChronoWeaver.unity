@@ -2628,8 +2628,12 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7607872336157863443, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
+      propertyPath: m_team
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607872336157863443, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
       propertyPath: m_Maxhp
-      value: 2000
+      value: 2500
       objectReference: {fileID: 0}
     - target: {fileID: 7607872336157863443, guid: 603832a4a9997a849bdfa41fabaa771d, type: 3}
       propertyPath: m_hpBar
@@ -3220,7 +3224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_enemyCount
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8633154346908676063, guid: 2b2a48f5b0fce2a4dbed33f7437779c7, type: 3}
       propertyPath: m_gameManager

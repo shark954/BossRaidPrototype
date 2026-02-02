@@ -78,6 +78,10 @@ public class Parameta : MonoBehaviour
         {
             m_hp = 0;
             m_death = true;
+            if (m_team == "Player")
+            {
+                m_gameManager.m_Overflag = true;
+            }
 
             // 死亡アニメーションなど
             if (m_animator != null)
@@ -115,7 +119,7 @@ public class Parameta : MonoBehaviour
                 move.OnEnemyKilled();
             }
         }
-
+      
         Destroy(this.gameObject, destroyTime);
         // 敵だった場合は EnemyManager に通知してから破壊
         if (m_team == "Enemy" && m_gameManager != null)

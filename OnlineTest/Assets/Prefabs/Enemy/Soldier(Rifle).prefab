@@ -129,7 +129,7 @@ MonoBehaviour:
   m_animator: {fileID: 7684651252339884032}
   m_AttackKyori: 0
   m_AttackMin: 1
-  m_AttackMax: 25
+  m_AttackMax: 15
   m_Parameta: {fileID: 7950006293690085895}
   m_AttackMaxCool: 5
   m_AttackCoolTime: 0
